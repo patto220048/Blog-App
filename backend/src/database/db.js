@@ -6,4 +6,5 @@ const db = mysql.createConnection({
     password : "dinhhuuphat",
     database : "test",
 })
+
 export default db

@@ -14,10 +14,13 @@ app.use(cookieParser());
 app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(cors())
+app.use(cors({
+    origin : 'https://localhost:3000',
+    credentials: true,
+}))
 
 db.connect(function(err) {
-    if (err) throw err;
+    if (err) return console.log(err.sqlMessage)
     console.log("Connected!");
   });
 
