@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
+// instance axios gobal
+const instance = axios.create({
+    baseURL: import.meta.env.VITE_SOME_KEY,
+    withCredentials: true, // add this when using cookies
+    headers: {
+        'Content-type': 'application/json',
+    },
+});
 
 const useFetch = (url, type, { ...dataFromUser }) => {
     const [data, setData] = useState(null);
@@ -8,18 +16,18 @@ const useFetch = (url, type, { ...dataFromUser }) => {
         const fetchData = async () => {
             try {
                 if (dataFromUser) {
-                    const data = await axios({
+                    const res = await instance({
                         url: url,
                         method: type,
                         data: { ...dataFromUser },
                     });
-                    setData(data);
+                    setData(res.data);
                 } else {
-                    const data = await axios({
+                    const res = await instance({
                         url: url,
                         method: type,
                     });
-                    setData(data);
+                    setData(res.data);
                 }
             } catch (error) {
                 console.log('FetchDataErr: ' + error.message);
@@ -27,6 +35,6 @@ const useFetch = (url, type, { ...dataFromUser }) => {
         };
         fetchData();
     }, [url]);
-    return [data];
+    return data;
 };
 export default useFetch;
