@@ -1,11 +1,11 @@
 
-import './App.css'
+import './App.scss'
 
 function App() {
 
   return (
     <>
-      <h1>helloo</h1>
+      <p>helloo</p>
     </>
   )
 }
