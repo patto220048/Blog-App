@@ -4,7 +4,7 @@ import "./Navbar.scss"
 function NavBar() {
     return ( 
         <>
-        
+            
         </>
      );
 }
