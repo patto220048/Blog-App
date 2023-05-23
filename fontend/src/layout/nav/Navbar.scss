@@ -1,0 +1,16 @@
+.navbar-container{
+
+    .navbar-wapper{
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: red;
+        .navbar-items{
+            width: 90%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 50px;
+        }
+    }
+}
