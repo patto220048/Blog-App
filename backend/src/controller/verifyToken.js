@@ -11,6 +11,8 @@ class verifyToken {
     });
   }
   
-  verifyAdmin(req, res, next)}
+  verifyAdmin(req, res, next)
+
+}
 
 export default new verifyToken();
