@@ -1,6 +1,7 @@
 @import './color';
 @import './gobal';
 
-p{
-    color: red;
+.main{
+    width: 100%;
+    background-color: $bgDark;
 }

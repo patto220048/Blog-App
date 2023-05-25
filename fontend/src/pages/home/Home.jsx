@@ -1,7 +1,7 @@
 import './Home.scss';
 
 function Home() {
-    return <p>test</p>;
+    return <></>;
 }
 
 export default Home;
