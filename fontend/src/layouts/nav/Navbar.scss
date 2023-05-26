@@ -20,7 +20,7 @@
         }
         .navbar-items{
             flex: 1;
-            color: $textColorDark;
+            color: $textSoftColorDark;
             font-size: 18px;
             font-weight: 400;
             display: flex;
@@ -28,6 +28,12 @@
             gap: 30px;
             justify-content: flex-end;
             cursor: pointer;
+            li{
+                &:hover{
+                    color: $textColorDark;
+                    }
+            }
+          
         }
         .lighmode{
             color: $textColorDark;

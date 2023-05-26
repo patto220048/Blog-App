@@ -5,11 +5,11 @@ function NavBar() {
     return (
         <div className="navbar-container">
             <div className="navbar-wapper">
-                <span className="logo">PHAT</span>
+                <span className="logo">Blog</span>
                 <ul className="navbar-items">
-                    <li>HOME</li>
-                    <li>BLOG</li>
-                    <li>CONTACT</li>
+                    <li>Home</li>
+                    <li>Blog</li>
+                    <li>Contact</li>
                 </ul>
                 <div className="lighmode">
                     <span>11231</span>
