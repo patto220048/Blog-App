@@ -1,18 +1,55 @@
 import './App.scss';
-import useFetch from './hooks/useFetch';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
+import Home from './pages/home/Home';
+import NavBar from './layouts/nav/Navbar';
 function App() {
-    const data = useFetch('http://localhost:3000/api/login', 'POST', {
-        email: 'test1@gmail.com',
-        password: '123456',
-    });
-    console.log(data);
+    //Protect router
+    const currentUser = true;
 
-    return (
-        <>
-      hello
-    </>
-    );
+    const ProtectRouter = ({ children }) => {
+        if (!currentUser) {
+            return <h1>You are not authenticed</h1>;
+        }
+        return children;
+    };
+    //Layout
+    const Layout = () => {
+        return (
+           <>
+           <div className="main">
+                <header>
+                    <NavBar/>
+                </header>
+                <div className="wapper">
+                    <Outlet/>
+                </div>
+                <footer>
+
+                </footer>
+           </div>
+           </>
+        );
+    };
+    //Router
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: (
+                <ProtectRouter>
+                    <Layout />
+                </ProtectRouter>
+            ),
+            children: [
+                {
+                    path: '/',
+                    element: <Home />,
+                },
+            ],
+        },
+    ]);
+    return <RouterProvider router={router} />;
+
 }
 
 export default App;

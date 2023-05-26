@@ -10,6 +10,9 @@ class verifyToken {
       next();
     });
   }
+  
+  verifyAdmin(req, res, next)
+
 }
 
 export default new verifyToken();
