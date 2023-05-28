@@ -224,7 +224,9 @@ function NavBar() {
                 </li>
                 <li>
                     {/* <button className='btn'>Login</button> */}
-                    <Avatar />
+                    <span >
+                        <Avatar />
+                    </span>
                 </li>
             </ul>
         </nav>

@@ -28,9 +28,7 @@
                 display: flex;
                 align-items: center;
             }
-            li:last-child {
-                margin-right: 10px;
-            }
+            
             button:hover {
                 opacity: 0.8;
             }
@@ -64,7 +62,9 @@
                 opacity: 0.8;
             }
             
-
+        }
+        :hover{
+            opacity: 0.8;
         }
         
     }
@@ -80,3 +80,4 @@
     color: $white;
     background-color: $mainColor;
 }
+
