@@ -1,9 +1,12 @@
-import './App.scss';
+import { useState, useContext } from 'react';
+import './_gobal.scss';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
-
+import { ThemeContext } from './context/ThemeContext';
 import Home from './pages/home/Home';
 import NavBar from './layouts/nav/Navbar';
 function App() {
+    const { theme} = useContext(ThemeContext);
+
     //Protect router
     const currentUser = true;
 
@@ -16,19 +19,15 @@ function App() {
     //Layout
     const Layout = () => {
         return (
-           <>
-           <div className="main">
-                <header>
-                    <NavBar/>
-                </header>
-                <div className="wapper">
-                    <Outlet/>
+        <>
+            <NavBar />
+            <div className={theme}>
+                <div className="background flex">
+                   
                 </div>
-                <footer>
-
-                </footer>
-           </div>
-           </>
+               
+            </div>
+        </>
         );
     };
     //Router
@@ -49,7 +48,6 @@ function App() {
         },
     ]);
     return <RouterProvider router={router} />;
-
-}   
+}
 
 export default App;

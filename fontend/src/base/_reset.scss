@@ -1,0 +1,52 @@
+@import  '../color';
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.light {
+    .text{
+        color:$dark-1000;
+    }
+    .background{
+        
+        background-color: $white;
+    }   
+}
+
+.dark {
+    .text{
+        color: $white;
+    }
+    .background{
+        background-color: $mainColor;
+    }
+}
+
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.w-full{
+    width: 100%;
+}
+.h-full{
+    height: 100vh;
+}
+.m-1{
+    margin: 1em;
+}
+.pd-1{
+    padding: 1em;
+}
+.btn{
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: $btnColor;
+    color: $dark-1000;
+    font-weight: bold;
+    
+}

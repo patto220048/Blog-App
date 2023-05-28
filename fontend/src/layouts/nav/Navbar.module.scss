@@ -1,0 +1,82 @@
+@import '../../color';
+@import '../../gobal';
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+
+    h1 {
+        color: $white;
+        margin-left: 30px;
+    }
+    ul {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        font-weight: bold;
+        cursor: pointer;
+        gap: 20px;
+        li {
+            margin: 1em;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+          
+            div {
+                display: flex;
+                align-items: center;
+            }
+            li:last-child {
+                margin-right: 10px;
+            }
+            button:hover {
+                opacity: 0.8;
+            }
+            button {
+                font-size: 15px;
+                font-weight: bold;
+                z-index: 1;
+                position: relative;
+                padding: 8px 16px;
+                outline: none;
+                border: none;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+            button::after {
+                content: '';
+                z-index: -1;
+                background-color: transparent;
+                position: absolute;
+                top: -50%;
+                bottom: -50%;
+                width: 20px;
+                transform: translate3d(-525%, 0, 0) rotate(35deg);
+            }
+
+            button:hover::after {
+                transition: transform 0.45s ease-in-out;
+                transform: translate3d(200%, 0, 0) rotate(35deg);
+                background-color: $mainColor;
+                opacity: 0.8;
+            }
+            
+
+        }
+        
+    }
+}
+.light {
+    color: $dark-1000;
+    background-color: $white;
+    h1 {
+        color: $dark-1000;
+    }
+}
+.dark {
+    color: $white;
+    background-color: $mainColor;
+}

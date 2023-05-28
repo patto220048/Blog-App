@@ -1,0 +1,31 @@
+@import '../../color';
+@import '../../gobal';
+
+.div{
+    display: flex;
+    gap: 20px;
+    img{
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    h2{
+        font-size: 20px;
+        max-width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    
+    
+}
+.span{
+    color: $dark-900;
+    background-color: $gray-300;
+    padding: 5px;
+    border-radius: 5px;
+    
+
+}
+
