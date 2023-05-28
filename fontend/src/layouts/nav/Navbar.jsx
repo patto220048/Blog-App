@@ -223,7 +223,7 @@ function NavBar() {
                     </div>
                 </li>
                 <li>
-                    {/* <button className='btn'>Login</button> */}
+                    {/* <button className='btn'>Login</button>   */}
                     <span >
                         <Avatar />
                     </span>

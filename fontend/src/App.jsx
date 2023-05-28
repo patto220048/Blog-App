@@ -23,7 +23,7 @@ function App() {
             <NavBar />
             <div className={theme}>
                 <div className="background flex">
-                   
+                   <Outlet/>
                 </div>
                
             </div>
