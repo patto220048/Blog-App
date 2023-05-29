@@ -1,31 +1,78 @@
 @import '../../color';
 @import '../../gobal';
 
-.div{
-    display: flex;
-    gap: 20px;
-    img{
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        object-fit: cover;
+.avatar {
+    position: relative;
+    .wapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        h2 {
+            font-size: 20px;
+            max-width: 150px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        span {
+            cursor: pointer;
+            :hover {
+                opacity: 0.8;
+            }
+        }
     }
-    h2{
-        font-size: 20px;
-        max-width: 150px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+    .menu{
+        position: absolute;
+        right: 0;
+        bottom: calc(-100% - 50px);
+        .listItems{
+            width: 100px;
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
+            padding: 5px;
+            border-radius: 5px;
+            .item{
+                border-radius: 5px;
+                cursor: pointer;
+                padding: 2px 3px;
+                font-size: 15px;
+                font-weight: 500;
+                transition: all 0.5s ease;
+                
+            }
+            :hover{
+                background-color: $gray-300;
+                color: $pink-600;
+            }
+        }
+
     }
-    
-    
+   
 }
-.span{
+.span {
     color: $dark-900;
     background-color: $gray-300;
     padding: 5px;
     border-radius: 5px;
+}
+.dark{
+    background-color: $gray-100;
+    color: $mainColor;
     
-
+}
+.light{
+    background-color: $mainColor ;
+    color: $white;
+    :hover{
+        background-color: $gray-500;
+    }
 }
 
