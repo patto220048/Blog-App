@@ -1,0 +1,12 @@
+@import './color';
+@import './gobal';
+
+.main{
+
+}
+.dark{
+    background-color: $mainColor;
+}
+.light{
+    background-color: $white;
+}

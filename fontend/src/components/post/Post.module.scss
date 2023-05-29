@@ -1,0 +1,46 @@
+@import '../../color';
+@import '../../gobal';
+
+.post{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 24px;
+    img{
+        width: 592px;
+        height: 228px;
+        object-fit: cover;
+        padding-bottom: 8px;
+    }
+    .date{
+        font-size: 12px;
+        font-weight: 600;
+        color: $red-400;
+    }
+    .postName{
+        font-size: 25px;
+        font-weight: 600;
+    }
+    .desc{
+        max-width: 580px ;
+        color: $descColor;
+
+    }
+    .tags{
+        display: flex;
+        gap: 8px;
+        .tagItem{
+            font-weight: 500;
+            background-color: $pink-400;
+            padding: 10px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+    }
+}
+.dark{
+    color: $white;
+}
+.light{
+
+}

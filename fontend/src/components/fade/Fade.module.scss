@@ -1,15 +1,26 @@
 @import '../../color';
 @import '../../gobal';
 
-
-
-.div{
-    
+.fade {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .name {
+        font-size: 30px;
+        font-weight: bold;
+        
+    }
+    .wapper {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+      
+    }
 }
 
-.light{
-    color:$dark-1000;
+.light {
+    color: $dark-1000;
 }
-.dark{
+.dark {
     color: $white;
 }

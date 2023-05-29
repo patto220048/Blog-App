@@ -4,8 +4,9 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import { ThemeContext } from './context/ThemeContext';
 import Home from './pages/home/Home';
 import NavBar from './layouts/nav/Navbar';
+import style from './App.module.scss';
 function App() {
-    const { theme} = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
 
     //Protect router
     const currentUser = true;
@@ -19,15 +20,12 @@ function App() {
     //Layout
     const Layout = () => {
         return (
-        <>
-            <NavBar />
-            <div className={theme}>
-                <div className="background flex">
-                   <Outlet/>
+            <div className={`${style.main} ${style[theme]} `}>
+                <NavBar />
+                <div className="flex">
+                    <Outlet />
                 </div>
-               
             </div>
-        </>
         );
     };
     //Router
