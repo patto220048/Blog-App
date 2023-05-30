@@ -2,7 +2,8 @@ import style from "./CreatePost.module.scss"
 
 function CreatePost() {
     return (  
-        <></> 
+        <>
+        </> 
     );
 }
 

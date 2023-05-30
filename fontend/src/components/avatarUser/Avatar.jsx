@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import style from './Avatar.module.scss';
 import Tippy from '@tippyjs/react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { Link } from 'react-router-dom';
 
 function Avatar() {
     //light mode
@@ -29,7 +30,9 @@ function Avatar() {
         <div className={style.avatar}>
             <div className={style.wapper}>
                 <div className={style.addPost}>
-                    <span>add</span>
+                    <Link to="/bolg/create">
+                        <span>add</span>
+                    </Link>
                 </div>
                 <Tippy content={<span className={`${style.span}`}>DINH HUU PHAT</span>}>
                     <img
@@ -70,9 +73,7 @@ function Avatar() {
             {onMenu && (
                 <div className={`${style.menu}`}>
                     <ul className={`${style.listItems} ${style[theme]}`}>
-                        <li className={style.item} >
-                            Role: Admin
-                        </li>
+                        <li className={style.item}>Role: Admin</li>
                         <li className={style.item}>Infimaton</li>
                         <li className={style.item}>Log out</li>
                     </ul>

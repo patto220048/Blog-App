@@ -1,0 +1,30 @@
+@import "../../color";
+@import "../../gobal";
+
+.containerDetail{
+    display: flex;
+    flex-direction: row;
+    
+    .postFlow{
+        flex: 1;
+    }
+    .wapper{
+        flex: 2;
+        .time{
+
+        }
+        .title{
+
+        }
+        img{
+
+        }
+        .content{
+
+        }
+    }
+    .recomment{
+        flex: 1;
+
+    }
+}

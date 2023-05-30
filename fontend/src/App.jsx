@@ -7,6 +7,7 @@ import NavBar from './layouts/nav/Navbar';
 import style from './App.module.scss';
 import BLog from './pages/blog/BLog';
 import CreatePost from './components/createPost/CreatePost';
+import DetailPost from './components/detailPost/DetailPost';
 function App() {
     const { theme } = useContext(ThemeContext);
 
@@ -49,8 +50,12 @@ function App() {
                     element: <BLog/>
                 },
                 {
-                    path : '/create',
+                    path : '/blog/create',
                     element: <CreatePost/>
+                },
+                {
+                    path : '/blog/post/:id',
+                    element: <DetailPost/>
                 }
             ],
         },
