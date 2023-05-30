@@ -6,9 +6,9 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 24px;
+    cursor: pointer;
+    padding: 20px;
     img{
-        width: 592px;
-        height: 228px;
         object-fit: cover;
         padding-bottom: 8px;
     }
@@ -22,7 +22,6 @@
         font-weight: 600;
     }
     .desc{
-        max-width: 580px ;
         color: $descColor;
 
     }

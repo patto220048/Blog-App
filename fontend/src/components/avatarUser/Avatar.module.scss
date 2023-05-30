@@ -3,16 +3,17 @@
 
 .avatar {
     position: relative;
+
     .wapper {
         display: flex;
-        gap: 10px;
+        gap: 20px;
         align-items: center;
-
         img {
             width: 35px;
             height: 35px;
             border-radius: 50%;
             object-fit: cover;
+            cursor: pointer;
         }
         h2 {
             font-size: 20px;
@@ -27,23 +28,26 @@
                 opacity: 0.8;
             }
         }
+        .addPost{
+            
+        }
     }
     .menu{
         position: absolute;
         right: 0;
-        bottom: calc(-100% - 50px);
+        bottom: calc(-100% - 60px);
         .listItems{
             width: 100px;
             display: flex;
             gap: 5px;
             flex-direction: column;
-            padding: 5px;
+            padding: 10px;
             border-radius: 5px;
             .item{
                 border-radius: 5px;
                 cursor: pointer;
                 padding: 2px 3px;
-                font-size: 15px;
+                font-size: 16px;
                 font-weight: 500;
                 transition: all 0.5s ease;
                 

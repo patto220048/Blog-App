@@ -5,7 +5,7 @@ import style from'./Home.module.scss';
 function Home() {
     return (
         <div>
-            <Fade/>
+           
         </div>
 
     );

@@ -5,14 +5,16 @@ import Post from '../post/Post';
 
 function Fade() {
     const { theme } = useContext(ThemeContext);
+    const arrs= [{title : "john"},{title : "lisa"},{title : "macus"},{title : "jack"}]
     return (
         <div className={`${style.fade} ${style[theme]}`}>
-            <span className={style.name}>Recent posts</span>
+            <span className={style.name}>All posts</span>
             <div className={style.wapper}>
-                <Post/>
-                <Post/>
-                <Post/>
-                <Post/>
+                {
+                    arrs.map(arr => (
+                        <div><Post/></div>
+                    ))
+                }
             </div>
         </div>
     );

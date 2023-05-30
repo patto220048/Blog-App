@@ -5,15 +5,18 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+   
     .name {
         font-size: 30px;
         font-weight: bold;
-        
+        padding-left: 20px;
     }
     .wapper {
         display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 20px;
-        flex-direction: column;
+        
       
     }
 }

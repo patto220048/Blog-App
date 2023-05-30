@@ -5,6 +5,8 @@ import { ThemeContext } from './context/ThemeContext';
 import Home from './pages/home/Home';
 import NavBar from './layouts/nav/Navbar';
 import style from './App.module.scss';
+import BLog from './pages/blog/BLog';
+import CreatePost from './components/createPost/CreatePost';
 function App() {
     const { theme } = useContext(ThemeContext);
 
@@ -42,6 +44,14 @@ function App() {
                     path: '/',
                     element: <Home />,
                 },
+                {
+                    path : '/blog',
+                    element: <BLog/>
+                },
+                {
+                    path : '/create',
+                    element: <CreatePost/>
+                }
             ],
         },
     ]);

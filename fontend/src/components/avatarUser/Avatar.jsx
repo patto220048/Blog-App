@@ -10,31 +10,35 @@ function Avatar() {
     const isLightTheme = theme === 'light';
     //open menu
     const [onMenu, setOnMenu] = useState(false);
-    const toggleMenu = (e)=>{
+    const toggleMenu = (e) => {
         e.stopPropagation();
-        setOnMenu(!onMenu)
-    }
+        setOnMenu(!onMenu);
+    };
     useEffect(() => {
         const handleClickOutside = () => {
             setOnMenu(false);
         };
-    
+
         document.addEventListener('click', handleClickOutside);
-    
+
         return () => {
-          document.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
         };
-      }, []);
+    }, []);
     return (
         <div className={style.avatar}>
             <div className={style.wapper}>
+                <div className={style.addPost}>
+                    <span>add</span>
+                </div>
                 <Tippy content={<span className={`${style.span}`}>DINH HUU PHAT</span>}>
                     <img
                         src="https://images.unsplash.com/photo-1684785459021-761c8ee14e49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                         alt=""
+                        onClick={toggleMenu}
                     />
                 </Tippy>
-                <span onClick={toggleMenu}>
+                {/* <span >
                     {(isLightTheme && (
                         <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -61,12 +65,14 @@ function Avatar() {
                                 />
                             </svg>
                         ))}
-                </span>
+                </span> */}
             </div>
             {onMenu && (
                 <div className={`${style.menu}`}>
                     <ul className={`${style.listItems} ${style[theme]}`}>
-                        <li className={style.item}>Role: Admin</li>
+                        <li className={style.item} >
+                            Role: Admin
+                        </li>
                         <li className={style.item}>Infimaton</li>
                         <li className={style.item}>Log out</li>
                     </ul>

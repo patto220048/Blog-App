@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import Search from '../../components/search/Search';
 import style from './NavBar.module.scss';
 import Avatar from '../../components/avatarUser/Avatar';
+import { NavLink } from 'react-router-dom';
 function NavBar() {
     const { theme, setTheme } = useContext(ThemeContext);
     const isDarkTheme = theme === 'dark';
@@ -13,10 +14,14 @@ function NavBar() {
             <h1 className="text">Logo</h1>
             <ul className={style.listItemNav}>
                 <li>
-                    <span> Home</span>
+                <NavLink to="/" style={{ textDecoration: 'none'}}>
+                    <span className={`${style[theme]}`}>Home</span>
+                </NavLink>
                 </li>
                 <li>
-                    <span>Blog</span>
+                    <NavLink to="/blog" style={{ textDecoration: 'none'}}>
+                        <span className={`${style[theme]}`}>Blog</span>
+                    </NavLink>
                 </li>
                 <li>
                     <span>Project</span>
