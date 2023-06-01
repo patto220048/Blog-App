@@ -29,11 +29,50 @@ function Avatar() {
     return (
         <div className={style.avatar}>
             <div className={style.wapper}>
+                <Tippy content = {<span  className={`${style.span}`}>Create post</span>}>
                 <div className={style.addPost}>
                     <Link to="/blog/create">
-                        <span>add</span>
+                        {(isLightTheme && (
+                            <span>
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 35 35"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
+                                        d="M18 0C19.5464 0 20.8 1.2536 20.8 2.8L20.799 15.2H33.2C34.7464 15.2 36 16.4536 36 18C36 19.5464 34.7464 20.8 33.2 20.8L20.799 20.799L20.8 33.2C20.8 34.7464 19.5464 36 18 36C16.4536 36 15.2 34.7464 15.2 33.2V20.799L2.8 20.8C1.2536 20.8 0 19.5464 0 18C0 16.4536 1.2536 15.2 2.8 15.2H15.2V2.8C15.2 1.2536 16.4536 0 18 0Z"
+                                        fill="#505D6F"
+                                    />
+                                </svg>
+                            </span>
+                        )) ||
+                            (isDarkTheme && (
+                                <span>
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 36 36"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            clipRule="evenodd"
+                                            d="M18 0C19.5464 0 20.8 1.2536 20.8 2.8L20.799 15.2H33.2C34.7464 15.2 36 16.4536 36 18C36 19.5464 34.7464 20.8 33.2 20.8L20.799 20.799L20.8 33.2C20.8 34.7464 19.5464 36 18 36C16.4536 36 15.2 34.7464 15.2 33.2V20.799L2.8 20.8C1.2536 20.8 0 19.5464 0 18C0 16.4536 1.2536 15.2 2.8 15.2H15.2V2.8C15.2 1.2536 16.4536 0 18 0Z"
+                                            fill="white"
+                                        />
+                                    </svg>
+                                </span>
+                            ))}
                     </Link>
                 </div>
+
+                </Tippy>
+              
                 <Tippy content={<span className={`${style.span}`}>DINH HUU PHAT</span>}>
                     <img
                         src="https://images.unsplash.com/photo-1684785459021-761c8ee14e49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
@@ -41,34 +80,6 @@ function Avatar() {
                         onClick={toggleMenu}
                     />
                 </Tippy>
-                {/* <span >
-                    {(isLightTheme && (
-                        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M25.0653 34.5111L37.7794 20.4247C38.0735 20.0988 38.0735 19.5704 37.7794 19.2444C37.6381 19.0879 37.4465 19 37.2467 19H10.7533C10.3372 19 10 19.3736 10 19.8346C10 20.0559 10.0794 20.2682 10.2206 20.4247L22.9347 34.5111C23.5231 35.163 24.4769 35.163 25.0653 34.5111Z"
-                                fill="#333333"
-                            />
-                        </svg>
-                    )) ||
-                        (isDarkTheme && (
-                            <svg
-                                width="20"
-                                height="20"
-                                viewBox="0 0 48 48"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M25.0653 34.5111L37.7794 20.4247C38.0735 20.0988 38.0735 19.5704 37.7794 19.2444C37.6381 19.0879 37.4465 19 37.2467 19H10.7533C10.3372 19 10 19.3736 10 19.8346C10 20.0559 10.0794 20.2682 10.2206 20.4247L22.9347 34.5111C23.5231 35.163 24.4769 35.163 25.0653 34.5111Z"
-                                    fill="white"
-                                />
-                            </svg>
-                        ))}
-                </span> */}
             </div>
             {onMenu && (
                 <div className={`${style.menu}`}>

@@ -28,55 +28,53 @@
                 opacity: 0.8;
             }
         }
-        .addPost{
-            
+        .addPost {
         }
     }
-    .menu{
+    .menu {
         position: absolute;
         right: 0;
         bottom: calc(-100% - 60px);
-        .listItems{
+        .listItems {
             width: 100px;
             display: flex;
             gap: 5px;
             flex-direction: column;
             padding: 10px;
             border-radius: 5px;
-            .item{
+            .item {
                 border-radius: 5px;
                 cursor: pointer;
                 padding: 2px 3px;
                 font-size: 16px;
                 font-weight: 500;
                 transition: all 0.5s ease;
-                
             }
-            :hover{
+            :hover {
                 background-color: $gray-300;
                 color: $pink-600;
             }
         }
-
     }
-   
 }
 .span {
     color: $dark-900;
     background-color: $gray-300;
     padding: 5px;
     border-radius: 5px;
+    transition: all 0.2 ease;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 15px;
 }
-.dark{
+.dark {
     background-color: $gray-100;
     color: $mainColor;
-    
 }
-.light{
-    background-color: $mainColor ;
+.light {
+    background-color: $mainColor;
     color: $white;
-    :hover{
+    :hover {
         background-color: $gray-500;
     }
 }
-

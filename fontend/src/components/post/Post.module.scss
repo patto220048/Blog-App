@@ -1,41 +1,53 @@
 @import '../../color';
 @import '../../gobal';
 
-.post{
+.post {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 24px;
-    cursor: pointer;
     padding: 20px;
-    img{
+    img {
         object-fit: cover;
         padding-bottom: 8px;
         width: 580px;
     }
-    .date{
+    .date {
         font-size: 12px;
         font-weight: 600;
         color: $red-400;
     }
-    .postName{
+    .postName {
         font-size: 25px;
         font-weight: 600;
-      
     }
-    .desc{
+    .auther {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .name {
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    }
+    .desc {
         color: $descColor;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
-        
-
     }
-    .tags{
+    .tags {
         display: flex;
         gap: 8px;
-        .tagItem{
+        .tagItem {
             font-weight: 500;
             background-color: $pink-400;
             padding: 10px;
@@ -44,9 +56,9 @@
         }
     }
 }
-.dark{
+.dark {
     color: $white;
 }
-.light{
+.light {
     color: $dark-1000;
 }

@@ -48,3 +48,24 @@ body {
     color: $dark-1000;
     font-weight: bold;
 }
+.gap {
+    gap: 10px;
+}
+
+.avatar-1{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    img {
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+    span {
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
