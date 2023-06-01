@@ -30,7 +30,7 @@ function Avatar() {
         <div className={style.avatar}>
             <div className={style.wapper}>
                 <div className={style.addPost}>
-                    <Link to="/bolg/create">
+                    <Link to="/blog/create">
                         <span>add</span>
                     </Link>
                 </div>

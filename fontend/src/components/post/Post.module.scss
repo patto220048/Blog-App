@@ -11,6 +11,7 @@
     img{
         object-fit: cover;
         padding-bottom: 8px;
+        width: 580px;
     }
     .date{
         font-size: 12px;
@@ -20,9 +21,15 @@
     .postName{
         font-size: 25px;
         font-weight: 600;
+      
     }
     .desc{
         color: $descColor;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        
 
     }
     .tags{
@@ -41,5 +48,5 @@
     color: $white;
 }
 .light{
-
+    color: $dark-1000;
 }

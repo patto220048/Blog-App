@@ -25,7 +25,7 @@ function App() {
         return (
             <div className={`${style.main} ${style[theme]} `}>
                 <NavBar />
-                <div className="flex">
+                <div >
                     <Outlet />
                 </div>
             </div>
