@@ -1,0 +1,18 @@
+@import "../../color";
+@import "../../gobal";
+
+.cratePost{
+    display: flex;
+    margin: 10px;
+    gap: 10px;
+
+    .editer{
+        flex: 2;
+    }
+    .editerRight{
+        flex: 1;
+        .rightItem{
+            
+        }
+    }
+}
