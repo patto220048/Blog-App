@@ -1,10 +1,15 @@
 
+
 import styled from "./Login.module.scss"
 function Login() {
     return ( 
-    <>
-    hello
-    </> 
+    <div className={styled.login}>
+        <div className={styled.wapper}>
+            <form>
+                
+            </form>
+        </div>
+    </div> 
     );
 }
 
