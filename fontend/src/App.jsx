@@ -8,6 +8,8 @@ import style from './App.module.scss';
 import BLog from './pages/blog/BLog';
 import CreatePost from './components/createPost/CreatePost';
 import DetailPost from './components/detailPost/DetailPost';
+import Login from './register/login/Login'; 
+import SignUp from './register/signup/SignUp';
 function App() {
     const { theme } = useContext(ThemeContext);
 
@@ -58,7 +60,16 @@ function App() {
                     element: <DetailPost/>
                 }
             ],
+            
         },
+        {
+            path :'/login',
+            element: <Login/>
+        },
+        {
+            path :'/signup',
+            element: <SignUp/>
+        }
     ]);
     return <RouterProvider router={router} />;
 }

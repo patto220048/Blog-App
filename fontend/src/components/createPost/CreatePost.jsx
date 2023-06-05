@@ -1,4 +1,3 @@
-
 import { useContext, useState } from 'react';
 import style from './CreatePost.module.scss';
 import ReactQuill, { Quill } from 'react-quill';
@@ -7,8 +6,8 @@ import 'react-quill/dist/quill.snow.css';
 function CreatePost() {
     const [value, setValue] = useState('');
     const { theme } = useContext(ThemeContext);
-    console.log(value);
-    const { Quill } = ReactQuill;
+    const themeDark = theme === 'dark';
+    const themeLight = theme === 'light';
     const modules = {
         toolbar: [
             [{ header: [1, 2, false] }],
@@ -59,43 +58,59 @@ function CreatePost() {
                     onChange={setValue}
                     modules={modules}
                     formats={formats}
-                    placeholder ='Compose an epic...'
-                  
+                    placeholder="Compose an epic..."
                 />
             </div>
             <div className={style.editerRight}>
+                <h1>Thumbnail Image</h1>
+                <div className={style.thumbnail}>
+                    <input type="file" name="file" id='file'/>
+                    <label htmlFor="file">Import file</label>
+                </div>
                 <h1>Public</h1>
                 <div className={`${style.status} ${style[theme]}`}>
-                   <span>
-                    <b>Status :</b> OKE
-                   </span>
-                   <span>
-                    <b>Visibility :</b> Public
-                   </span>
-                    <button className='btn'>Create</button>
+                    <span>
+                        <b>Status :</b> OKE
+                    </span>
+                    <span>
+                        <b>Visibility :</b> Public
+                    </span>
+                    <button className="btn">Create</button>
                 </div>
-                <h1>Category</h1>
+                <h1>Tags</h1>
                 <div className={style.category}>
-                    <div>
-                    <input type="radio" name="Nodejs" value="react" id='react' />
-                    <label htmlFor="react">React</label>
+                    {/* <div>
+                        <input type="radio" name="Nodejs" value="react" id="react" />
+                        <label htmlFor="react">React</label>
                     </div>
                     <div>
-                    <input type="radio" name="Nodejs" value="nodejs" id='nodejs' />
-                    <label htmlFor="nodejs">Node JS</label>
+                        <input type="radio" name="Nodejs" value="nodejs" id="nodejs" />
+                        <label htmlFor="nodejs">Node JS</label>
                     </div>
                     <div>
-                    <input type="radio" name="Nodejs" value="nodejs" id='nodejs' />
-                    <label htmlFor="nodejs">Node JS</label>
+                        <input type="radio" name="Nodejs" value="nodejs" id="nodejs" />
+                        <label htmlFor="nodejs">Node JS</label>
                     </div>
                     <div>
-                    <input type="radio" name="Nodejs" value="nodejs" id='nodejs' />
-                    <label htmlFor="nodejs">Node JS</label>
-                    </div>
-                   
+                        <input type="radio" name="Nodejs" value="nodejs" id="nodejs" />
+                        <label htmlFor="nodejs">Node JS</label>
+                    </div> */}
+
+                    {(themeDark && (
+                        <input
+                            type="text"
+                            placeholder="Example: reactjs, javacript, .... "
+                            className={style.darkInputColor}
+                        />
+                    )) ||
+                        (themeLight && (
+                            <input
+                                type="text"
+                                placeholder="Example: reactjs, javacript, .... "
+                                className={style.lightInputColor}
+                            />
+                        ))}
                 </div>
-                
-                
             </div>
         </div>
     );
