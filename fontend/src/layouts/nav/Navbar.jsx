@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import Search from '../../components/search/Search';
 import style from './NavBar.module.scss';
 import Avatar from '../../components/avatarUser/Avatar';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 function NavBar() {
     const { theme, setTheme } = useContext(ThemeContext);
     const isDarkTheme = theme === 'dark';
@@ -225,8 +225,10 @@ function NavBar() {
                 </li>
             </ul>
             <div>
-                {/* <button className="btn">Login</button> */}
-                <Avatar />
+                <Link to= "/login">
+                    <button className="btn">Login</button>
+                </Link>
+                {/* <Avatar /> */}
             </div>
         </nav>
     );

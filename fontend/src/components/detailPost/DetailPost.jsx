@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import style from './DetailPost.module.scss';
 import { ThemeContext } from '../../context/ThemeContext';
 import Recommend from '../recommend/Recommend';
-import Comment from '../comment/Comment';
+
 import Comments from '../comments/Comments';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
+
     return (
         <div className={`${style.containerDetail} ${style[theme]}`}>
             <div className={style.postFlow}>1</div>
@@ -96,12 +97,11 @@ function DetailPost() {
                     </p>
                 </div>
                 <div>
-                    <Comments/>
+                    <Comments />
                 </div>
             </div>
             <div className={style.recommend}>
                 <Recommend />
-            
             </div>
         </div>
     );
