@@ -1,0 +1,48 @@
+@import '../../color';
+@import '../../gobal';
+
+.comment {
+    padding: 20px;
+    // border: 1px solid #333;
+    .avatar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .avatarItem {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            img {
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+            }
+            h1{
+                font-size: 20px;
+            }
+            span{
+                font-size: 15px;
+                opacity: 0.5;
+            }
+        }
+        p{
+            text-align: justify;
+            line-height: 20px;
+        }
+    }
+    .option{
+       .item{
+        display: flex;
+        justify-content: flex-end;
+        gap: 60px;
+
+        li{
+            cursor: pointer;
+        }
+       }
+    }
+}
