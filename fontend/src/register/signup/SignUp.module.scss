@@ -1,0 +1,88 @@
+@import '../../color';
+@import '../../gobal';
+.signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    background-color: $white;
+    .wapper {
+      
+        transform: translateY(-100px);
+        border: 1px solid #ccc;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            input {
+                padding: 10px;
+                width: 400px;
+            }
+            span {
+                color: $errColor;
+                font-size: 14px;
+            }
+            button {
+                background-color: $pink-500;
+                border-radius: 5px;
+                font-size: 15px;
+                padding: 12px;
+
+                color: $white;
+                font-size: 15px;
+                font-weight: bold;
+                z-index: 1;
+                position: relative;
+                outline: none;
+                border: none;
+                overflow: hidden;
+                cursor: pointer;
+                &::after {
+                    content: '';
+                    z-index: -1;
+                    background-color: transparent;
+                    position: absolute;
+                    top: -50%;
+                    bottom: -50%;
+                    width: 40px;
+                    transform: translate3d(-525%, 0, 0) rotate(20deg);
+
+                }
+                &:hover::after{
+                    transition: transform 0.45s ease-in-out;
+                    transform: translate3d(200%, 0, 0) rotate(35deg);
+                    background-color: $mainColor;
+                    opacity: 0.8;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+        div{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            div{
+                display: flex;
+                align-items: center;
+                span{
+                    color: $dark-1000; 
+                    font-weight: 500;
+                 }
+            }
+        }
+    }
+}

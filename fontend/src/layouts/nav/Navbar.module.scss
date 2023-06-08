@@ -11,7 +11,7 @@
     top: 0;
     z-index: 9999;
     background-color: $mainColor;
-    h1{
+    h1 {
         color: $white;
     }
     .listItemNav {
@@ -27,22 +27,14 @@
             display: flex;
             align-items: center;
             font-size: 18px;
-            
-            
-            
         }
-        :hover{
+        :hover {
             color: $pink-600;
-           
         }
-        
-
     }
-    div{
+    div {
         display: flex;
-        button:hover {
-            opacity: 0.8;
-        }
+
         button {
             font-size: 15px;
             font-weight: bold;
@@ -53,31 +45,31 @@
             border: none;
             overflow: hidden;
             cursor: pointer;
+            &:hover {
+                opacity: 0.8;
+            }
+            &::after {
+                content: '';
+                z-index: -1;
+                background-color: transparent;
+                position: absolute;
+                top: -50%;
+                bottom: -50%;
+                width: 20px;
+                transform: translate3d(-525%, 0, 0) rotate(35deg);
+            }
+            &:hover::after {
+                transition: transform 0.45s ease-in-out;
+                transform: translate3d(200%, 0, 0) rotate(35deg);
+                background-color: $mainColor;
+                opacity: 0.8;
+            }
         }
-
-        button::after {
-            content: '';
-            z-index: -1;
-            background-color: transparent;
-            position: absolute;
-            top: -50%;
-            bottom: -50%;
-            width: 20px;
-            transform: translate3d(-525%, 0, 0) rotate(35deg);
-        }
-
-        button:hover::after {
-            transition: transform 0.45s ease-in-out;
-            transform: translate3d(200%, 0, 0) rotate(35deg);
-            background-color: $mainColor;
-            opacity: 0.8;
-        }
-
     }
 }
 .light {
     color: $dark-1000;
-    background-color:rgba($color: $white, $alpha: 0.9);
+    background-color: rgba($color: $white, $alpha: 0.9);
 
     h1 {
         color: $dark-1000;
@@ -85,7 +77,5 @@
 }
 .dark {
     color: $white;
-    background-color:rgba($color: $mainColor, $alpha: 0.8);
-   
+    background-color: rgba($color: $mainColor, $alpha: 0.8);
 }
-
