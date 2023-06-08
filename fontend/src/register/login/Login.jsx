@@ -46,7 +46,8 @@ function Login() {
                             <span>Back to home</span>
                         </div>
                     </Link>
-                    <span>Reset password | Report</span>
+                    <span>Reset password </span>
+                  
                 </div>
             </div>
         </div>
