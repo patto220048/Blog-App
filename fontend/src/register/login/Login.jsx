@@ -22,11 +22,12 @@ function Login() {
                 </form>
                 <span>
                     <Link>Sign up? </Link>
-                    If you don't have account. </span>
-               <div>
-                
-               </div>
-               
+                    If you don't have account.{' '}
+                </span>
+                <div >
+                    <span>Back to home</span>
+                    <span>Reset password | Report</span>
+                </div>
             </div>
         </div>
     );
