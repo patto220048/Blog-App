@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import transport from "../mail/index.js";
 import crypto from "crypto";
 import moment from "moment";
+import { ifError } from "assert";
 class authController {
   signup(req, res) {
     //check user exists
@@ -36,10 +37,13 @@ class authController {
   login(req, res, next) {
     //check login user with email
     const q = "SELECT * FROM users WHERE email = ?";
-    db.query(q, [req.body.email, req.body.password], (err, data) => {
+    db.query(q, [req.body.email], async (err, data) => {
       if (err) return res.status(500).json(err.message);
       if (data.length === 0) return res.status(404).json("USER NOT FOUND!!!");
-      const checkPass = bcryptjs.compare(req.body.password,  data[0].password);
+      const checkPass = await bcryptjs.compare(
+        req.body.password,
+        data[0].password
+      );
       if (!checkPass) return res.status(400).json("WRONG PASSWORD OR EMAIL!!!");
       const token = jwt.sign({ id: data[0].id }, process.env.JWT_KEY);
       const { password, ...others } = data[0];
@@ -68,10 +72,12 @@ class authController {
       db.query(q, req.body.email, (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length === 0) return res.status(404).json("USER NOT FOUND!!!");
-        data[0].resetToken = token;
-        data[0].resetTokenExpiration = Date.now() + 3600000;
-        try {
-          transport.sendMail({
+        const q =
+          "UPDATE users SET `resetToken` = ?, `resetTokenExpiration` =? WHERE email = ?";
+        const VALUES = [token, Date.now()+3600];
+        db.query(q, [...VALUES, req.body.email], (err, data) => {
+          if (err) return res.status(500).json(err.message);
+          return  transport.sendMail({
             from: "blog-app@space-social.online", // sender address
             to: req.body.email, // list of receivers
             subject: "Reset password", // Subject line
@@ -80,27 +86,30 @@ class authController {
             <p>Plese click this link to set new password.<a href = "http://localhost:3000/api/auth/reset/${token}">${token}</a></p>
             `, // html body
           });
-        } catch (error) {
-          console.log(error);
-        }
-        return res.status(200).json(data[0]);
+        });
+        return res.status(200).json("Request reset password successful!!");
       });
     });
   }
-  newPass(req, res, next) {
+  async newPass(req, res, next) {
     const token = req.params.token;
-    const q =
-      "SELECT * FROM users WHERE resetToken =? AND resetTokenExpiration <= ?";
-    db.query(q, [token, Date.now()], (err, user) => {
-      if (err) return res.status(500).json("Token is invalid or expired!!");
-      const salt = bcryptjs.genSaltSync(10);
-      const hashPass = bcryptjs.hashSync(req.body.password, salt);
-      const q = "UPDATE users SET `password` = ? ";
-      db.query(q, [hashPass], (err, data) => {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json(data[0]);
+    const q = "SELECT * FROM users WHERE resetToken = ? AND resetTokenExpiration <= ?"
+    db.query(q,[token, Date.now()], async (err, data)=>{
+      if (err) return res.status(503).json(err.message)
+      if (data.length == 0) return res.status(403).json("Token invalid or expiration!!")
+      const salt = await bcryptjs.genSaltSync(10);
+      const hashPass = await bcryptjs.hashSync(req.body.password, salt);
+      const q =
+        "UPDATE users SET `password` = ?, `resetToken` = NULL , `resetTokenExpiration` = NULL WHERE resetToken = ? AND resetTokenExpiration <= ?";
+      const VALUES = [hashPass]
+      db.query(q, [...VALUES, token, Date.now()], (err, data) => {
+        if (err) return res.status(501).json(err.message);
+        return res.status(200).json("Set password successfully!!")
       });
-    });
+    })
+   
+  
+   
   }
 }
 
