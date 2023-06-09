@@ -3,16 +3,14 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transport from "../mail/index.js";
 import crypto from "crypto";
-import moment from "moment";
-import { ifError } from "assert";
 class authController {
-  signup(req, res) {
+  signup(req, res, next) {
     //check user exists
-    const q = "SELECT * FROM users WHERE username = ? OR email = ?";
+    const q = "SELECT * FROM users WHERE username = ? OR email= ?";
     db.query(q, [req.body.username, req.body.email], (err, data) => {
       if (err) return res.status(500).json(err.message);
       // check user exists in database
-      if (data.length) return res.status(409).json("USER ALREADY EXISTS!!");
+      if (data.length) return res.status(402).json("USER ALREADY EXISTS!!");
       //hash password
       const salt = bcryptjs.genSaltSync(10);
       const hashPass = bcryptjs.hashSync(req.body.password, salt);

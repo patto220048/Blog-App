@@ -18,6 +18,16 @@ app.use(cors({
     origin : 'http://localhost:5173',
     credentials: true,
 }))
+//handle err
+app.use((err, req, res, next) => {
+    const status = err.status || 500
+    const message = err.message || 'something went wrong!';
+    return res.status(status).json({
+      success: false,
+      status,
+      message
+    })
+})
 
 db.connect(function(err) {
     if (err) return console.log(err.sqlMessage)
