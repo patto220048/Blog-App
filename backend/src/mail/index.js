@@ -7,7 +7,7 @@ const transport = nodemailer.createTransport({
   secure: true, // true for 465, false for other ports
   auth: {
     user: 'blog-app@space-social.online', // generated ethereal user
-    pass: '01636069497Aa!', // generated ethereal password
+    pass: process.env.PASS_MAIL , // generated ethereal password
   },
 });
 
