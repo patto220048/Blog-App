@@ -7,5 +7,6 @@ router.post("/login", authController.login);
 router.get("/logout", authController.logout);
 router.post("/reset", authController.resetPass);
 router.post("/reset/:token", authController.newPass);
+router.post("/verify?user&code", authController.verifyMail);
 
 export default router;

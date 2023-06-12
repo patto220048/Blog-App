@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transport from "../mail/index.js";
 import crypto from "crypto";
+import { ifError } from "assert";
 class authController {
   signup(req, res, next) {
     crypto.randomBytes(32, (err, buffer) => {
@@ -33,7 +34,7 @@ class authController {
               html: `<p>Your account signup suscessfull !!!</p>
                       <a href = "http://localhost:3000/api/auth/verify?user=${req.user.id}&code=${codeVerifyMail}">Click here<a/>`, // html body
             });
-          } catch (error) {
+          } catch(error) {
             console.log(error);
           }
           return res.status(200).json("USER CREATED SUCESSFULL!!!");
@@ -126,6 +127,29 @@ class authController {
         return res.status(200).json("Set password successfully!!");
       });
     });
+  }
+  verifyMail(req, res, next){
+    const userId = req.query.user;
+    const code = req.query.code;
+    const q = "SELECT * FROM users  WHERE id = ?"
+    db.query(1, [userId], (err, data) => {
+      if (err) return res.status(503).json(err.message);
+      if (data.length == 0) return res.status(404).json("User not found!!");
+      if (data[0].code == codeVerify) {
+        q = "UPDATE users SET `verified` = 1, `codeVerify` = Null WHERE id = ?";
+        const VALUES = [data[0].id]
+        db.query(q, [...VALUES], (err, data) => {
+          if (err) return res.status(503).json(err.message);
+          return res.status(200).json("Verified successfully!!")
+        })
+
+      }
+      else {
+        return res.status(405).json("Verified something error");
+      }
+
+    })
+
   }
 }
 
