@@ -135,7 +135,7 @@ class authController {
     db.query(1, [userId], (err, data) => {
       if (err) return res.status(503).json(err.message);
       if (data.length == 0) return res.status(404).json("User not found!!");
-      if (data[0].code == codeVerify) {
+      if (data[0].codeVerify == code) {
         q = "UPDATE users SET `verified` = 1, `codeVerify` = Null WHERE id = ?";
         const VALUES = [data[0].id]
         db.query(q, [...VALUES], (err, data) => {
