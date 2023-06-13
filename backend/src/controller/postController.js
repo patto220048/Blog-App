@@ -4,10 +4,10 @@ import moment from "moment";
 class postController {
   //get all posts
   getPosts(req, res, next) {
-    const q = req.query.tag
-      ? "SELECT FROM posts WHERE tags=?"
+    const q = req.query.category
+      ? "SELECT `title`, `desc`,`img`, `date`, `like` , `category` FROM posts p WHERE p.category =?"
       : "SELECT * FROM posts";
-    db.query(q, [req.query.tag], (err, data) => {
+    db.query(q, [req.query.category], (err, data) => {
       if (err) res.status(500).json(err);
       return res.status(200).json(data);
     });
@@ -26,20 +26,23 @@ class postController {
   addPost(req, res, next) {
     const currentUser = req.user.id;
     const q =
-      "INSERT INTO posts(`title`, `desc`, `img`, `date`, `tags`, `uid`) VALUES (?)";
+      "INSERT INTO posts (`title`, `desc`, `img`,`date`,`uid`,`category`) VALUES(?) ";
     const VALUES = [
       req.body.title,
       req.body.desc,
       req.body.img,
       moment().format(),
-      req.body.tags,
       currentUser,
+      req.body.category,
+
     ];
+
     db.query(q, [VALUES], (err, data) => {
       if (err) res.status(500).json(err.message);
       return res.status(200).json("Add post successfully!");
     });
   }
+  
   // update post
   updatePost(req, res, next) {
     const currentUser = req.user.id;
