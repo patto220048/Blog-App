@@ -13,11 +13,11 @@ function NavBar() {
         <nav className={`${style.nav} ${style[theme]}`}>
             <h1 className="text">Logo</h1>
             <ul className={style.listItemNav}>
-                <li>
+                {/* <li>
                 <NavLink to="/" style={{ textDecoration: 'none'}}>
                     <span className={`${style[theme]}`}>Home</span>
                 </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to="/blog" style={{ textDecoration: 'none'}}>
                         <span className={`${style[theme]}`}>Blog</span>
@@ -225,10 +225,10 @@ function NavBar() {
                 </li>
             </ul>
             <div>
-                <Link to= "/login">
+                {/* <Link to= "/login">
                     <button className="btn">Login</button>
-                </Link>
-                {/* <Avatar /> */}
+                </Link> */}
+                <Avatar />
             </div>
         </nav>
     );

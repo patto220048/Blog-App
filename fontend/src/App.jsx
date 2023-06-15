@@ -1,4 +1,4 @@
-    import { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import './_gobal.scss';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import { ThemeContext } from './context/ThemeContext';
@@ -8,8 +8,9 @@ import style from './App.module.scss';
 import BLog from './pages/blog/BLog';
 import CreatePost from './components/createPost/CreatePost';
 import DetailPost from './components/detailPost/DetailPost';
-import Login from './register/login/Login'; 
+import Login from './register/login/Login';
 import SignUp from './register/signup/SignUp';
+import ResetPass from './register/resetPass/ResetPass';
 function App() {
     const { theme } = useContext(ThemeContext);
 
@@ -27,9 +28,9 @@ function App() {
         return (
             <div className={`${style.main} ${style[theme]} `}>
                 <NavBar />
-                <div >
+                <main>
                     <Outlet />
-                </div>
+                </main>
             </div>
         );
     };
@@ -37,39 +38,38 @@ function App() {
     const router = createBrowserRouter([
         {
             path: '/',
-            element: (
-                <ProtectRouter>
-                    <Layout />
-                </ProtectRouter>
-            ),
+            element: <Layout />,
             children: [
+                // {
+                //     path: '/',
+                //     element: <Home />,
+                // },
                 {
-                    path: '/',
-                    element: <Home />,
+                    path: '/blog',
+                    element: <BLog />,
                 },
                 {
-                    path : '/blog',
-                    element: <BLog/>
+                    path: '/blog/create',
+                    element:<ProtectRouter><CreatePost /></ProtectRouter> ,
                 },
                 {
-                    path : '/blog/create',
-                    element: <CreatePost/>
+                    path: '/blog/post/:id',
+                    element: <DetailPost />,
                 },
-                {
-                    path : '/blog/post/:id',
-                    element: <DetailPost/>
-                }
             ],
-            
         },
         {
-            path :'/login',
-            element: <Login/>
+            path: '/login',
+            element: <Login />,
         },
         {
-            path :'/signup',
-            element: <SignUp/>
-        }
+            path: '/signup',
+            element: <SignUp />,
+        },
+        {
+            path: '/reset',
+            element: <ResetPass />,
+        },
     ]);
     return <RouterProvider router={router} />;
 }

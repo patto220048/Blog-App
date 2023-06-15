@@ -1,5 +1,6 @@
 import Comment from '../comment/Comment';
 import styled from './Comments.module.scss';
+import ReactQuill, { Quill } from 'react-quill';
 
 function Comments() {
     return (
@@ -8,7 +9,10 @@ function Comments() {
 
             <div className={styled.inputComment}>
                 <img src="" alt="" />
-                <textarea type="text" placeholder="Comment ..." className="none" />
+                 <ReactQuill
+                    theme='snow'
+                    placeholder="Compose an epic..."
+                />
                 <button>Comment</button>
             </div>
             <Comment />
