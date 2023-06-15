@@ -1,23 +1,18 @@
-import { useContext } from 'react';
-import styled from './Login.module.scss';
-import { ThemeContext } from '../../context/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import styled from "./ResetPass.module.scss"
 
-function Login() {
-    const { theme } = useContext(ThemeContext);
-    return (
-        <div className={styled.login}>
+function ResetPass() {
+    
+    return ( 
+        <div className={styled.reset}>
             <div className={styled.wapper}>
-                <h1>Login</h1>
+                <h1>Reset Password</h1>
                 <form>
                     <input type="email" placeholder="Email" />
                     <span>errfa d a dfa df ad</span>
 
-                    <input type="password" placeholder="Password" />
-                    <span>123</span>
-
                     <button type="submit" className="none">
-                        Login
+                        Send
                     </button>
                 </form>
                 <span>
@@ -46,13 +41,13 @@ function Login() {
                             <span>Back to home</span>
                         </div>
                     </Link>
-                    <Link to = "/reset" style={{textDecoration:"none"}}>
-                        <span>Reset password </span>
+                    <Link to = "/login" style={{textDecoration:"none"}}>
+                        <span>Login </span>
                     </Link>
                 </div>
             </div>
         </div>
-    );
+     );
 }
 
-export default Login;
+export default ResetPass;

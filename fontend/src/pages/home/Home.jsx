@@ -4,8 +4,11 @@ import style from'./Home.module.scss';
 
 function Home() {
     return (
-        <div>
-           
+        <div className={style.home}>
+            <div className={style.wapper}>
+                
+            </div>
+            
         </div>
 
     );
