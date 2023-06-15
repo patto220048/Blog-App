@@ -2,10 +2,12 @@ import db from "../database/db.js";
 import moment from "moment";
 
 class postController {
+  //list to tags
+
   //get all posts
   getPosts(req, res, next) {
     const q = req.query.category
-      ? "SELECT `title`, `desc`,`img`, `date`, `like` , `category` FROM posts p WHERE p.category =?"
+      ? "SELECT `title`, `desc`,`img`, `date`, `like` , `tags` FROM posts p WHERE tags = ?"
       : "SELECT * FROM posts";
     db.query(q, [req.query.category], (err, data) => {
       if (err) res.status(500).json(err);
@@ -34,7 +36,6 @@ class postController {
       moment().format(),
       currentUser,
       req.body.category,
-
     ];
 
     db.query(q, [VALUES], (err, data) => {
@@ -42,7 +43,7 @@ class postController {
       return res.status(200).json("Add post successfully!");
     });
   }
-  
+
   // update post
   updatePost(req, res, next) {
     const currentUser = req.user.id;
@@ -53,7 +54,7 @@ class postController {
       if (data.length === 0) res.status(404).json("Post not found");
       if (data[0].uid === currentUser) {
         const q =
-          "UPDATE posts SET `title` = ?, `desc` = ?, `img` = ?, `date`= ?, `tags` = ?WHERE `id` =? AND `uid`=?";
+          "UPDATE posts SET `title` = ?, `desc` = ?, `img` = ?, `date`= ?, `tags` = ? WHERE `id` =? AND `uid`=?";
         const VALUES = [
           req.body.title,
           req.body.desc,
@@ -89,6 +90,10 @@ class postController {
         return res.status(403).json("You just deleted your post!");
       }
     });
+  }
+
+  likePost(req, res, next) {
+
   }
 }
 
