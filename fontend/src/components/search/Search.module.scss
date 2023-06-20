@@ -1,0 +1,14 @@
+@import '../../color';
+@import '../../gobal';
+
+.search {
+    display: flex;
+    justify-content: center;
+    .searchItem {
+        input {
+            width: 600px;
+            height: 20px;
+            padding: 10px;
+        }
+    }
+}
