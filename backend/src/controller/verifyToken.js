@@ -12,7 +12,7 @@ const verifyToken = {
   },
   verifyAdmin : (req, res, next) =>{
     verifyToken.verifyUser(req, res, ()=> {
-      if (req.user.admin) {
+      if (req.user.admin === 1) {
         next();
       }
       else res.status(403).json("Permission not denie!!!");
