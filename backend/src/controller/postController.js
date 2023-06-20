@@ -1,23 +1,23 @@
 import db from "../database/db.js";
 import moment from "moment";
-
+import createErrorMessage from '../errors/handleErr.js'
 class postController {
-  //list to tags 
+  //list to tags
 
   //get all posts
   getPosts(req, res, next) {
     const q = req.query.category
-      ? "SELECT `title`, `desc`,`img`, `date`, `like` , `tags` FROM posts p WHERE tags = ?"
+      ? "SELECT `title`, `desc`,`img`, `date`, `tags` FROM posts p WHERE tags = ?"
       : "SELECT * FROM posts";
     db.query(q, [req.query.category], (err, data) => {
-      if (err) res.status(500).json(err);
+      if (err) return res.status(500).json(err);
       return res.status(200).json(data);
     });
   }
   // get post
   getPost(req, res, next) {
     const q =
-      "SELECT p.id, `email`,`username`, `avatar`, `title`, `desc`,`img`, `date`, `tags`, `like` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
+      "SELECT p.id, `email`,`username`, `avatar`, `title`, `desc`,`img`, `date`, `tags` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(data[0]);
@@ -39,7 +39,7 @@ class postController {
     ];
 
     db.query(q, [VALUES], (err, data) => {
-      if (err) res.status(500).json(err.message);
+      if (err) return res.status(500).json(err.message);
       return res.status(200).json("Add post successfully!");
     });
   }
@@ -50,16 +50,15 @@ class postController {
     const postId = req.params.id;
     const q = "SELECT * FROM `posts` WHERE id = ?";
     db.query(q, [postId], (err, data) => {
-      if (err) res.status(500).json(err.message);
-      if (data.length === 0) res.status(404).json("Post not found");
+      if (err) return res.status(500).json(err.message);
+      if (data.length === 0) return res.status(404).json("Post not found");
       if (data[0].uid === currentUser || req.user.admin) {
         const q =
-          "UPDATE posts SET `title` = ?, `desc` = ?, `img` = ?, `date`= ?, `tags` = ? WHERE `id` =? AND `uid`=?";
+          "UPDATE posts SET `title` = ?, `desc` = ?, `img` = ?, `tags` = ? WHERE `id` =? AND `uid`=?";
         const VALUES = [
           req.body.title,
           req.body.desc,
           req.body.img,
-          moment().format(),
           req.body.tags,
         ];
         db.query(q, [...VALUES, postId, currentUser], (err, data) => {
@@ -78,8 +77,8 @@ class postController {
 
     const q = "SELECT * FROM `posts` WHERE id = ?";
     db.query(q, [postId], (err, data) => {
-      if (err) res.status(500).json(err.message);
-      if (data.length === 0) res.status(404).json("Post not found");
+      if (err) return res.status(500).json(err.message);
+      if (data.length === 0) return res.status(404).json("Post not found");
       if (data[0].uid === currentUser || req.user.admin) {
         const q = "DELETE FROM posts p WHERE id = ?";
         db.query(q, [postId], (err, data) => {
@@ -92,8 +91,25 @@ class postController {
     });
   }
 
-  likePost(req, res, next) {
-
+  async likePost(req, res, next) {
+    const postId = req.params.id;
+    const q = "SELECT id, `like`, `uid` FROM `posts` WHERE id = ?"
+    try {
+       db.query(q, [postId],(err, data) => {
+        if (err) return res.status(500).json(err.message) 
+        if (data.length === 0) return res.status(404).json("Post not found");
+        const q = "UPDATE `posts` SET `like` = ? WHERE id = ?"
+        const VALUES = [data[0].like += 1, postId]
+        db.query(q, [...VALUES], (err,data)=>{
+          if (err) return res.status(500).json(err.message) 
+          return res.status(200).json('Like sucessfull!')
+        } )
+      });
+    } catch (error) {
+      return createErrorMessage(500, error.message);
+    }
+  
+   
   }
 }
 
