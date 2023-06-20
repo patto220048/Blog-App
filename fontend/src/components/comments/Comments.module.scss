@@ -36,7 +36,9 @@
             button {
                 padding: 12px;
                 font-size: 15px;
-                
+                &:hover{
+                    opacity: 0.8;
+                }
             }
         }
     }
