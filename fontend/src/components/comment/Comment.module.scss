@@ -35,13 +35,46 @@
         }
     }
     .option{
+        padding-top: 20px;
+
        .item{
         display: flex;
         justify-content: flex-end;
         gap: 60px;
 
         li{
+            display: flex;
+            align-items: center;
+            gap: 10px;
             cursor: pointer;
+            position: relative;
+            
+            span{
+                font-weight: 500;
+                font-size: 19px;
+            }
+            .optionComment{
+                    top: 25px;
+                    right: 0px;
+                    position: absolute;
+                    background-color: rgba($color: $pink-600, $alpha: 0.9);
+                    border-radius: 5px;
+                    padding: 5px;
+                .optionItem{
+                    display: flex;
+                    flex-direction: column;
+                    .itemComment{
+                        padding: 5px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        border-radius: 5px;
+                        &:hover{
+                            color: aliceblue;
+                            background-color:rgba($color: $gray-400, $alpha: 0.3);
+                        }
+                    }
+                }
+            }
         }
        }
     }
