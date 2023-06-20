@@ -2,7 +2,7 @@ import db from "../database/db.js";
 import moment from "moment";
 
 class postController {
-  //list to tags
+  //list to tags 
 
   //get all posts
   getPosts(req, res, next) {
@@ -28,14 +28,14 @@ class postController {
   addPost(req, res, next) {
     const currentUser = req.user.id;
     const q =
-      "INSERT INTO posts (`title`, `desc`, `img`,`date`,`uid`,`category`) VALUES(?) ";
+      "INSERT INTO posts (`title`, `desc`, `img`,`date`,`uid`,`tags`) VALUES(?) ";
     const VALUES = [
       req.body.title,
       req.body.desc,
       req.body.img,
       moment().format(),
       currentUser,
-      req.body.category,
+      req.body.tags,
     ];
 
     db.query(q, [VALUES], (err, data) => {
@@ -52,7 +52,7 @@ class postController {
     db.query(q, [postId], (err, data) => {
       if (err) res.status(500).json(err.message);
       if (data.length === 0) res.status(404).json("Post not found");
-      if (data[0].uid === currentUser) {
+      if (data[0].uid === currentUser || req.user.admin) {
         const q =
           "UPDATE posts SET `title` = ?, `desc` = ?, `img` = ?, `date`= ?, `tags` = ? WHERE `id` =? AND `uid`=?";
         const VALUES = [
@@ -80,7 +80,7 @@ class postController {
     db.query(q, [postId], (err, data) => {
       if (err) res.status(500).json(err.message);
       if (data.length === 0) res.status(404).json("Post not found");
-      if (data[0].uid === currentUser) {
+      if (data[0].uid === currentUser || req.user.admin) {
         const q = "DELETE FROM posts p WHERE id = ?";
         db.query(q, [postId], (err, data) => {
           if (err) return res.status(500).json(err.message);
