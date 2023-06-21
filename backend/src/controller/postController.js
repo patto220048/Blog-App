@@ -9,6 +9,9 @@ class postController {
       : "SELECT * FROM posts";
     db.query(q, [req.query.category], (err, data) => {
       if (err) return res.status(500).json(err);
+      res.cookie("tags", data[0].tags, {
+        httpOnly: true,
+      });
       return res.status(200).json(data);
     });
   }
