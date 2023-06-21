@@ -15,4 +15,6 @@ router.delete('/:id', verifyToken.verifyUser, postController.deletePost)
 
 router.put('/like/:id',verifyToken.verifyUser, postController.likePost)
 
+router.put('/dislike/:id',verifyToken.verifyUser, postController.dislikePost)
+
 export default router
