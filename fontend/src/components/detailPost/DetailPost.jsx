@@ -2,14 +2,46 @@ import { useContext, useState } from 'react';
 import style from './DetailPost.module.scss';
 import { ThemeContext } from '../../context/ThemeContext';
 import Recommend from '../recommend/Recommend';
+import ReactMarkdown from 'react-markdown';
 
 import Comments from '../comments/Comments';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
+    const markdown = `
+   ## ti123123 
+   helo
+   helo helo
+   helo
+   ## title 2
+   llol o l
+   olo l
+   lolol
+   ### title 3
 
+    `;
+    const H2 = ({node, ...props}) => {
+        return (
+            <h2 id={node.position?.start.line.toString()}>{props.children}</h2>
+        )
+    }
+    const ankerLink = ({ node, ...props }) => {
+        return (
+            <a href={"#"+node.position?.start.line.toString()}>{props.children}</a>
+        );
+      }
     return (
         <div className={`${style.containerDetail} ${style[theme]}`}>
-            <div className={style.postFlow}>1</div>
+            <div className={style.postFlow}>
+                <ReactMarkdown
+                 allowedElements={["h2"]}
+                  components={{
+                    h2:ankerLink,
+                  }}
+                >
+                 {markdown}   
+                </ReactMarkdown>
+             
+            </div>
             <div className={style.postLike}>
                 <div className={style.likeItem}>
                     <div>
@@ -54,47 +86,8 @@ function DetailPost() {
                 </div>
 
                 <div className={style.content}>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Fuga temporibus deserunt ipsam, reprehenderit repellendus nam nemo delectus
-                        eum magni corporis! Praesentium dicta illum, consectetur quos cupiditate commodi impedit ratione
-                        iure. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure.
-                        <br />
-                        <br />
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Fuga temporibus deserunt ipsam, reprehenderit repellendus nam nemo delectus
-                        eum magni corporis! Praesentium dicta illum, consectetur quos cupiditate commodi impedit ratione
-                        iure. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Fuga temporibus deserunt ipsam, reprehenderit repellendus nam nemo delectus
-                        eum magni corporis! Praesentium dicta illum, consectetur quos cupiditate commodi impedit ratione
-                        iure. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Fuga temporibus deserunt ipsam, reprehenderit repellendus nam nemo delectus
-                        eum magni corporis! Praesentium dicta illum, consectetur quos cupiditate commodi impedit ratione
-                        iure. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Fuga temporibus deserunt ipsam, reprehenderit repellendus nam nemo delectus
-                        eum magni corporis! Praesentium dicta illum, consectetur quos cupiditate commodi impedit ratione
-                        iure.
-                        <br />
-                        <br />
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga temporibus deserunt ipsam,
-                        reprehenderit repellendus nam nemo delectus eum magni corporis! Praesentium dicta illum,
-                        consectetur quos cupiditate commodi impedit ratione iure. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Fuga temporibus deserunt ipsam, reprehenderit repellendus nam nemo delectus
-                        eum magni corporis! Praesentium dicta illum, consectetur quos cupiditate commodi impedit ratione
-                        iure.
-                    </p>
+                    {markdown}
+                    
                 </div>
                 <div>
                     <Comments />

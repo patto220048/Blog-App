@@ -5,6 +5,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import 'react-quill/dist/quill.snow.css';
 function CreatePost() {
     const [value, setValue] = useState('');
+    console.log(value);
     const { theme } = useContext(ThemeContext);
     const themeDark = theme === 'dark';
     const themeLight = theme === 'light';
