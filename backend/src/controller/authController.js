@@ -3,6 +3,24 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transport from "../mail/index.js";
 import crypto from "crypto";
+
+// create accsess token
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    { id: user[0].id, admin: user[0].admin },
+    process.env.JWT_ACCESS_KEY,
+    { expiresIn: "1m" }
+  );
+};
+// create refresh token
+const generateRefeshToken = (user) => {
+  return jwt.sign(
+    { id: user[0].id, admin: user[0].admin },
+    process.env.JWT_REFRESH_KEY,
+    { expiresIn: "7d" }
+  );
+};
+
 class authController {
   signup(req, res, next) {
     crypto.randomBytes(32, (err, buffer) => {
@@ -47,39 +65,81 @@ class authController {
         data[0].password
       );
       if (!checkPass) return res.status(400).json("WRONG PASSWORD OR EMAIL!!!");
-      // sign json wed token
-      const access_token = jwt.sign(
-        { id: data[0].id, admin: data[0].admin },
-        process.env.JWT_ACCESS_KEY
-      );
-      // save refresh token in db
-      // const refresh_token = jwt.sign(
-      //   { id: data[0].id, admin: data[0].admin },
-      //   process.env.JWT_REFRESH_KEY,
-      //   { expiresIn: "7d" } 
-      // );
-
-      // db.query(q, [refresh_token, data[0].id], (err, data) => {
-      //   if (err)
-      //     return res.status(500).json("UPDATE users ERROR " + err.message);
-      // });
-      const { password, ...others } = data[0];
-      res
-        .cookie("accessToken", access_token, {
+      // save refresh token in database
+      // sign access token
+      const q = "UPDATE users SET `refreshToken`= ? WHERE `id` = ?";
+      const access_token = generateAccessToken(data);
+      // sign refresh token
+      const refresh_token = generateRefeshToken(data);
+      const VALUES = [refresh_token, data[0].id];
+      db.query(q, [...VALUES], (err, user) => {
+        if (err)
+          return res
+            .status(500)
+            .json("Update refreshToken ERROR: " + err.message);
+      });
+      const { password, refreshToken, ...others } = data[0];
+      return res
+        .cookie("accsessToken", "Bearer " +access_token, {
+          expires: new Date(Date.now() + 8 * 3600000),
           httpOnly: true,
+          secure: true
         })
         .status(200)
-        .json({ others, access_token });
+        .json({ ...others, access_token, refresh_token });
+    });
+  }
+  refresh(req, res, next) {
+    const refreshToken = req.body.token;
+    if (!refreshToken)
+      return res.status(401).json("You are not authenticated!");
+    // TODO: check if refresh token
+    const q = "SELECT * FROM users WHERE refreshToken = ?";
+    const VALUES = [refreshToken];
+    db.query(q, [...VALUES], (err, data) => {
+      if (err)
+        return res
+          .status(500)
+          .json("Select refresh token ERROR: " + err.message);
+      // if token not found in database repons message
+      if (data.length === 0)
+        return res.status(403).json("Refresh token not valid");
+      // It's OKE
+      // verify refreshToken and create new access token, refresh token
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
+        if (err) return res.status(err).json(err.message);
+        const newAccessToken = generateAccessToken(data);
+        const newRefreshToken = generateRefeshToken(data);
+        // assign newAccessToken to refreshToken in db
+        const q = "UPDATE users SET `refreshToken`= ? WHERE `id` = ?";
+        const VALUES = [newRefreshToken, req.user.id];
+        db.query(q, [...VALUES], (err, data) => {
+          if (err)
+            return res
+              .status(err)
+              .json("Update new refresh token ERROR: " + err.message);
+          return res
+            .status(200)
+            .json({
+              access_token: newAccessToken,
+              refresh_token: newRefreshToken,
+            });
+        });
+      });
     });
   }
   logout(req, res) {
-    res
-      .clearCookie("accessToken", {
-        secure: true,
-        sameSite: "none",
-      })
-      .status(200)
-      .json("USER HAS BEEN LOGOUT!!!");
+    const refreshToken = req.body.token;
+    // set null refresh token
+    const q = "UPDATE users SET refreshToken = null WHERE refreshToken = ?";
+    db.query(q, [refreshToken], (err, data) => {
+      if (err)
+        return res
+          .status(500)
+          .json("Update refreshToken ERROR: " + err.message);
+      
+      return res.clearCookie("accsessToken").status(200).json("Log out successfully!!");
+    });
   }
   resetPass(req, res, next) {
     // create token
@@ -115,10 +175,10 @@ class authController {
   // new password
   async newPass(req, res, next) {
     //check token
-    const token = req.params.token;
+    const resetPassToken = req.params.token;
     const q =
       "SELECT * FROM users WHERE resetToken = ? AND resetTokenExpiration <= ?";
-    db.query(q, [token, Date.now()], async (err, data) => {
+    db.query(q, [resetPassToken, Date.now()], async (err, data) => {
       if (err) return res.status(503).json(err.message);
       if (data.length == 0)
         return res.status(403).json("Token invalid or expiration!!");
@@ -129,7 +189,7 @@ class authController {
       const q =
         "UPDATE users SET `password` = ?, `resetToken` = NULL , `resetTokenExpiration` = NULL WHERE resetToken = ? AND resetTokenExpiration <= ?";
       const VALUES = [hashPass];
-      db.query(q, [...VALUES, token, Date.now()], (err, data) => {
+      db.query(q, [...VALUES, resetPassToken, Date.now()], (err, data) => {
         if (err) return res.status(501).json(err.message);
         return res.status(200).json("Set password successfully!!");
       });
@@ -145,7 +205,7 @@ class authController {
       if (data.length == 0) return res.status(404).json("User not found!!");
       // check generated code virify
       if (data[0].verifyCode == code) {
-        // set verified
+        // set verified email = true (1)
         const q =
           "UPDATE users SET `verified` = 1, `verifyCode` = NULL WHERE id = ?";
         const VALUES = [data[0].id];
@@ -161,6 +221,7 @@ class authController {
 
   sendMailVerify(req, res, next) {
     const email = req.body.email;
+    // check email
     const q = "SELECT id,verifyCode,email FROM users WHERE email = ?";
     db.query(q, [email], (err, data) => {
       if (err) return res.status(503).json(err.message);
@@ -173,8 +234,7 @@ class authController {
           subject: "Verify email ✔", // Subject line
           text: "Wellcome, blog-app", // plain text body
           html: `<p>Click here verify your email !!!</p>
-                <a href = "http://localhost:3000/api/auth/verify?email=${req.body.email}&code=${data[0].verifyCode}">
-                <p>http://localhost:3000/api/auth/verify?email=${req.body.email}&code=${data[0].verifyCode}</p><a/>`, // html body
+                <p>http://localhost:3000/api/auth/verify?email=${req.body.email}&code=${data[0].verifyCode}</p>`, // html body
         });
       } catch (error) {
         console.log(error);
