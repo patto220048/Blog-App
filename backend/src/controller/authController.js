@@ -3,7 +3,6 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transport from "../mail/index.js";
 import crypto from "crypto";
-import { ifError } from "assert";
 class authController {
   signup(req, res, next) {
     crypto.randomBytes(32, (err, buffer) => {
@@ -38,6 +37,7 @@ class authController {
   login(req, res, next) {
     //check login user with email
     const q = "SELECT * FROM users WHERE email = ?";
+    console.log()
     db.query(q, [req.body.email], async (err, data) => {
       if (err) return res.status(500).json(err.message);
       if (data.length === 0) return res.status(404).json("USER NOT FOUND!!!");
@@ -48,14 +48,22 @@ class authController {
       );
       if (!checkPass) return res.status(400).json("WRONG PASSWORD OR EMAIL!!!");
       // sign json wed token
-      const token = jwt.sign({ id: data[0].id }, process.env.JWT_KEY);
+      const access_token = jwt.sign({ id: data[0].id , admin: data[0].admin }, process.env.JWT_ACCESS_KEY,{ expiresIn: '15m' });
+      // save refresh token in db
+      const refresh_token = jwt.sign({ id: data[0].id , admin: data[0].admin }, process.env.JWT_REFRESH_KEY,{ expiresIn: '7d' });
+      
+      db.query(q, [refresh_token, data[0].id], (err, data) => {
+      if (err) return res.status(500).json("UPDATE users ERROR "+ err.message);
+        
+      });
       const { password, ...others } = data[0];
       res
-        .cookie("accessToken", token, {
+        .cookie("accessToken", access_token, {
           httpOnly: true,
+          
         })
         .status(200)
-        .json(others);
+        .json({others, access_token});
     });
   }
   logout(req, res) {

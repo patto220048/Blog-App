@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
-class verifyToken {
-  verifyUser(req, res, next) {
+const verifyToken = {
+  verifyUser : (req, res, next) => {
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json("You are not authenticated!!!");
     jwt.verify(token, process.env.JWT_KEY, (err, uid) => {
@@ -9,9 +9,18 @@ class verifyToken {
       req.user = uid;
       next();
     });
+  },
+  verifyAdmin : (req, res, next) =>{
+    verifyToken.verifyUser(req, res, ()=> {
+      if (req.user.admin === 1) {
+        next();
+      }
+      else res.status(403).json("Permission not denie!!!");
+    })
   }
+  
 
 
 }
 
-export default new verifyToken();
+export default verifyToken;
