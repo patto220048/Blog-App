@@ -4,11 +4,12 @@ import createErrorMessage from "../errors/handleErr.js";
 class postController {
   //get all posts
   getPosts(req, res, next) {
-    const q = req.query.category
-      ? "SELECT `title`, `desc`,`img`, `date`, `tags` FROM posts p WHERE tags = ?"
+    const q = req.query.tags
+      ? "SELECT `title`, `desc`,`img`,`tags`,`createAt`, `updateAt`,`like` FROM posts p WHERE tags = ?"
       : "SELECT * FROM posts";
-    db.query(q, [req.query.category], (err, data) => {
+    db.query(q, [req.query.tags], (err, data) => {
       if (err) return res.status(500).json(err);
+      if (data.length === 0 ) return res.status(404).json("Post not found!!");
       res.cookie("tags", data[0].tags, {
         httpOnly: true,
       });
@@ -18,7 +19,7 @@ class postController {
   // get post
   getPost(req, res, next) {
     const q =
-      "SELECT p.id, `email`,`username`, `avatar`, `title`, `desc`,`img`, `date`, `tags` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
+      "SELECT p.id, `email`,`username`, `avatar`, `title`, `desc`,`img`, `createAt`, `updateAt`, `tags`,`like` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(data[0]);
@@ -138,38 +139,25 @@ class postController {
       if (err) return res.status(500).json("Select post ERROR: " + err.message);
       if (posts.length === 0) return res.status(404).json("Post not found");
       //check user already dislike post
-      const q = "SELECT * FROM dislikes WHERE userId = ? AND postId = ? ";
-      db.query(q, [req.user.id, postId], (err, dislikes) => {
-        if (err)
-          return res
-            .status(500)
-            .json("Select from dislikes ERROR: " + err.message);
-        // user not already like post
-        if (dislikes.length === 0) {
-          const q_insert = "INSERT INTO dislikes (userId, postId) VALUES (?)";
-          const VALUES_INSERT_DISLIKE_TABLE = [req.user.id, postId];
-          db.query(q_insert, [VALUES_INSERT_DISLIKE_TABLE], (err, data) => {
-            if (err)
-              return res
-                .status(500)
-                .json("Insert dislikes ERROR: " + err.message);
-            const q_setDisLikePost =
-              "UPDATE posts SET `like` = ? WHERE `id` = ?";
-            const VALUES_DISLIKE_POST = [(posts[0].like -= 1), postId];
-            db.query(
-              q_setDisLikePost,
-              [...VALUES_DISLIKE_POST],
-              (err, data) => {
-                if (err)
-                  return res
-                    .status(500)
-                    .json("Update posts ERROR: " + err.message);
-                return res.status(200).json("Dislike successfully!!");
-              }
-            );
-          });
-        } else {
-          return res.status(401).json("You already dislike this post!!");
+      const q = "SELECT * FROM likes WHERE userId = ? AND postId = ? ";
+      db.query(q, [req.user.id, postId], (err, likes) => {
+        if (err) return res.status(500).json("Select likes ERROR: " + err.message);
+        if(likes.length != 0) {
+          const q_DeleteLike = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ? "
+          const VALUES_DETELE_LIKE = [req.user.id, postId]
+          db.query(q_DeleteLike,[...VALUES_DETELE_LIKE],(err, data)=>{
+            if (err) return res.status(500).json("Delete likes ERROR: " + err.message);
+            //set like current post
+            const q_setLikePost = "UPDATE posts SET `like` = ? WHERE `id` = ?"
+            const VALUES_UPDATE_POST = [posts[0].like -= 1, postId]
+            db.query(q_setLikePost,[...VALUES_UPDATE_POST], (err, data) => {
+              if (err) return res.status(500).json("Update post ERROR: " + err.message);
+              return res.status(200).json("Dislike post updated successfully !!");
+            });
+          })
+        }  
+        else {
+          return res.status(401).json("You not like this post, please try again !");
         }
       });
     });
