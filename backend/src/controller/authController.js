@@ -6,7 +6,7 @@ import crypto from "crypto";
 class authController {
   signup(req, res, next) {
     crypto.randomBytes(32, (err, buffer) => {
-      if (err) return res.status(500).json( 'ErrCrypto: '+err.message);
+      if (err) return res.status(500).json("ErrCrypto: " + err.message);
       //check user exists
       const q = "SELECT * FROM users WHERE username = ? OR email= ?";
       db.query(q, [req.body.username, req.body.email], async (err, data) => {
@@ -37,7 +37,7 @@ class authController {
   login(req, res, next) {
     //check login user with email
     const q = "SELECT * FROM users WHERE email = ?";
-    console.log()
+    console.log();
     db.query(q, [req.body.email], async (err, data) => {
       if (err) return res.status(500).json(err.message);
       if (data.length === 0) return res.status(404).json("USER NOT FOUND!!!");
@@ -48,22 +48,28 @@ class authController {
       );
       if (!checkPass) return res.status(400).json("WRONG PASSWORD OR EMAIL!!!");
       // sign json wed token
-      const access_token = jwt.sign({ id: data[0].id , admin: data[0].admin }, process.env.JWT_ACCESS_KEY,{ expiresIn: '15m' });
+      const access_token = jwt.sign(
+        { id: data[0].id, admin: data[0].admin },
+        process.env.JWT_ACCESS_KEY
+      );
       // save refresh token in db
-      const refresh_token = jwt.sign({ id: data[0].id , admin: data[0].admin }, process.env.JWT_REFRESH_KEY,{ expiresIn: '7d' });
-      
-      db.query(q, [refresh_token, data[0].id], (err, data) => {
-      if (err) return res.status(500).json("UPDATE users ERROR "+ err.message);
-        
-      });
+      // const refresh_token = jwt.sign(
+      //   { id: data[0].id, admin: data[0].admin },
+      //   process.env.JWT_REFRESH_KEY,
+      //   { expiresIn: "7d" } 
+      // );
+
+      // db.query(q, [refresh_token, data[0].id], (err, data) => {
+      //   if (err)
+      //     return res.status(500).json("UPDATE users ERROR " + err.message);
+      // });
       const { password, ...others } = data[0];
       res
         .cookie("accessToken", access_token, {
           httpOnly: true,
-          
         })
         .status(200)
-        .json({others, access_token});
+        .json({ others, access_token });
     });
   }
   logout(req, res) {
@@ -134,8 +140,7 @@ class authController {
     const userEmail = req.query.email;
     const code = req.query.code;
     const q = "SELECT * FROM users  WHERE email = ?";
-    db.query(q, [userEmail,code], (err, data) => {
-      
+    db.query(q, [userEmail, code], (err, data) => {
       if (err) return res.status(503).json(err.message);
       if (data.length == 0) return res.status(404).json("User not found!!");
       // check generated code virify
@@ -158,10 +163,10 @@ class authController {
     const email = req.body.email;
     const q = "SELECT id,verifyCode,email FROM users WHERE email = ?";
     db.query(q, [email], (err, data) => {
-      if (err) return res.status(503).json(err.message)
-      if (data.length ===0 ) return res.status(404).json('User not found!!')
-       // send email success message
-       try {
+      if (err) return res.status(503).json(err.message);
+      if (data.length === 0) return res.status(404).json("User not found!!");
+      // send email success message
+      try {
         transport.sendMail({
           from: "blog-app@space-social.online", // sender address
           to: req.body.email, // list of receivers
@@ -174,11 +179,9 @@ class authController {
       } catch (error) {
         console.log(error);
       }
-      return res.status(200).json(data)
-    })
-
+      return res.status(200).json(data);
+    });
   }
-
 }
 
 export default new authController();
