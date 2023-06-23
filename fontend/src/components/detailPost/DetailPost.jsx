@@ -7,40 +7,31 @@ import ReactMarkdown from 'react-markdown';
 import Comments from '../comments/Comments';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
-    const markdown = `
-   ## ti123123 
-   helo
-   helo helo
-   helo
-   ## title 2
-   llol o l
-   olo l
-   lolol
-   ### title 3
-
-    `;
-    const H2 = ({node, ...props}) => {
-        return (
-            <h2 id={node.position?.start.line.toString()}>{props.children}</h2>
-        )
-    }
+    const getText = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent;
+    };
+    const markdown =`<p>## 12312312 123123123</p>`
+    const changeText = getText(markdown)
+    console.log(changeText)
+    const H2 = ({ node, ...props }) => {
+        return <h2 id={node.position?.start.line.toString()}>{props.children}</h2>;
+    };
     const ankerLink = ({ node, ...props }) => {
-        return (
-            <a href={"#"+node.position?.start.line.toString()}>{props.children}</a>
-        );
-      }
+        return <a href={'#' + node.position?.start.line.toString()}>{props.children}</a>;
+    };
     return (
         <div className={`${style.containerDetail} ${style[theme]}`}>
             <div className={style.postFlow}>
                 <ReactMarkdown
-                 allowedElements={["h2"]}
-                  components={{
-                    h2:ankerLink,
-                  }}
+                    allowedElements={['h2','h3']}
+                    components={{
+                        h2: H2,
+                        h2: ankerLink,
+                    }}
                 >
-                 {markdown}   
+                    {changeText}
                 </ReactMarkdown>
-             
             </div>
             <div className={style.postLike}>
                 <div className={style.likeItem}>
@@ -85,10 +76,7 @@ function DetailPost() {
                     <span>@123</span>
                 </div>
 
-                <div className={style.content}>
-                    {markdown}
-                    
-                </div>
+                <div className={style.content}>{changeText}</div>
                 <div>
                     <Comments />
                 </div>
