@@ -10,7 +10,8 @@ function DetailPost() {
     const getText = (html) => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
         return doc.body.textContent;
-    };
+    }; 
+    const h1 = 1
     const markdown =`<p>## 12312312 123123123</p>`
     const changeText = getText(markdown)
     console.log(changeText)
