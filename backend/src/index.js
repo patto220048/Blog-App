@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv';
 //route
 import route from './route/index.js';
 dotenv.config()
-
+const PORT = process.env.PORT ? process.env.PORT : 8080
 const app = express()
 
 app.use(cookieParser());
@@ -15,7 +15,7 @@ app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors({
-    origin : 'http://localhost:5173',
+    origin : process.env.CORS_CLIENT,
     credentials: true,
 }))
 //handle err
@@ -31,11 +31,11 @@ app.use((err, req, res, next) => {
 
 db.connect(function(err) {
     if (err) return console.log(err.sqlMessage)
-    console.log("Connected!");
+    console.log("Connected with MYSQL!");
   });
 
 route(app);
 
-app.listen(3000, ()=>{
-    console.log("Connect to backend! http://localhost:3000")
+app.listen(PORT, ()=>{
+    console.log(`Connect to backend! http://localhost:${PORT}`);
 })

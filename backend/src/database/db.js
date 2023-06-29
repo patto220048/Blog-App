@@ -1,9 +1,11 @@
+import * as dotenv from 'dotenv';
 import mysql from "mysql";
+dotenv.config()
 
 const db = mysql.createConnection({
-    host: "localhost",
+    host: process.env.HOST_MYSQL,
     user : "root",
-    password : "dinhhuuphat",
+    password : process.env.PASS_MYSQL,
     database : "test",
 })
 

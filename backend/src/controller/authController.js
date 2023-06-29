@@ -3,7 +3,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transport from "../mail/index.js";
 import crypto from "crypto";
-
+import createErrorMessage from "../errors/handleErr.js";
 // create accsess token
 const generateAccessToken = (user) => {
   return jwt.sign(
@@ -17,14 +17,14 @@ const generateRefeshToken = (user) => {
   return jwt.sign(
     { id: user[0].id, admin: user[0].admin },
     process.env.JWT_REFRESH_KEY,
-    { expiresIn: "7d" }
+    { expiresIn: "365d" }
   );
 };
 
 class authController {
   signup(req, res, next) {
     crypto.randomBytes(32, (err, buffer) => {
-      if (err) return res.status(500).json("ErrCrypto: " + err.message);
+      if (err) return res.json(createErrorMessage ("ErrCrypto: " + err.message));
       //check user exists
       const q = "SELECT * FROM users WHERE username = ? OR email= ?";
       db.query(q, [req.body.username, req.body.email], async (err, data) => {

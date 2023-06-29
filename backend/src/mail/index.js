@@ -1,13 +1,14 @@
 import nodemailer from "nodemailer";
-import sendgridTransport from "nodemailer-sendgrid-transport";
+import * as dotenv from 'dotenv';
+dotenv.config()
 
 const transport = nodemailer.createTransport({
-  host: "smtp.hostinger.com",
+  host: process.env.HOST_MAIL,
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-    user: "blog-app@space-social.online", // generated ethereal user
-    pass: "01636069497Aa!", // generated ethereal password
+    user: process.env.USER_MAIL, // generated ethereal user
+    pass: process.env.PASS_MAIL, // generated ethereal password
   },
 });
 
