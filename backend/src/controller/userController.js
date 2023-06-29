@@ -24,7 +24,6 @@ class userController {
   }
 
   getUser(req, res, next) {
-    console.log(process.env.PASS_MYSQL)
     const userId = req.params.userId;
     const q =
       "SELECT id, email, username, verified, avatar, admin FROM users WHERE id = ?";
@@ -34,6 +33,38 @@ class userController {
       return res.status(200).json(data[0]);
     });
   }
+  deleteUser(req, res, next) {
+    const userId = req.params.userId;
+    const q = "DELETE FROM users WHERE id = ?";
+    db.query(q, [userId], (err, data) =>{
+        if(err) return res.json(createErrorMessage(500, "Delete users ERROR"+ err.message))
+        if (data.length === 0) return res.json(createErrorMessage(404,'User not found!'));
+        return res.status(200).json(`Deleted user #${userId}`)
+    })
+  }
+  deleteUsers(req, res, next) {
+
+  }
+  updateUser(req, res, next) {
+    const userId = req.params.userId;   
+    const q = "UPDATE users SET `username`= ?, `email`= ?, `password`= ?, `verified` = ?, `avatar`= ?, `admin`= ? WHERE `id` = ?";
+    const VALUES = [
+        req.body.username,
+        req.body.email,
+        req.body.password,
+        req.body.verified,
+        req.body.avatar,
+        req.body.admin,
+    ]
+    db.query(q,[...VALUES,userId], (err, data)=>{
+        if(err) return res.json(createErrorMessage(500, "Update users ERROR"+ err.message))
+        if (data.length === 0) return res.json(createErrorMessage(404,'User not found!'));
+        return res.status(200).json(`Updated user #${userId}`)
+
+    })
+  }
+  
+
 }
 
 export default new userController();
