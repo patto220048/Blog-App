@@ -9,7 +9,7 @@ const generateAccessToken = (user) => {
   return jwt.sign(
     { id: user[0].id, admin: user[0].admin },
     process.env.JWT_ACCESS_KEY,
-    { expiresIn: "1m" }
+    { expiresIn: "15m" }
   );
 };
 // create refresh token
@@ -83,7 +83,7 @@ class authController {
         .cookie("accsessToken", "Bearer " +access_token, {
           expires: new Date(Date.now() + 8 * 3600000),
           httpOnly: true,
-          secure: true
+          // secure: true
         })
         .status(200)
         .json({ ...others, access_token, refresh_token });
@@ -130,6 +130,7 @@ class authController {
   }
   logout(req, res) {
     const refreshToken = req.body.token;
+    if (!refreshToken) return res.status(405).json("Token not found!!");
     // set null refresh token
     const q = "UPDATE users SET refreshToken = null WHERE refreshToken = ?";
     db.query(q, [refreshToken], (err, data) => {
