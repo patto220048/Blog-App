@@ -43,7 +43,8 @@ class userController {
     })
   }
   deleteUsers(req, res, next) {
-
+    const userId = req.params.userId;
+    
   }
   updateUser(req, res, next) {
     const userId = req.params.userId;   
@@ -60,7 +61,6 @@ class userController {
         if(err) return res.json(createErrorMessage(500, "Update users ERROR"+ err.message))
         if (data.length === 0) return res.json(createErrorMessage(404,'User not found!'));
         return res.status(200).json(`Updated user #${userId}`)
-
     })
   }
   
