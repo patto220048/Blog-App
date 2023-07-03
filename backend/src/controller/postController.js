@@ -38,8 +38,8 @@ class postController {
       FROM users u JOIN posts p ON u.id = p.uid\
       WHERE p.id = ?";
     db.query(q, [req.params.id], (err, data) => {
-      if (err) return res.status(500).json(err);
-      if(data.length === 0) return res.status(404).json("Post not found!!");
+      if (err) return res.json(createErrorMessage(500, "Select post ERROR: " + err.message));
+      if (data.length === 0 ) return res.json(createErrorMessage(404,"Post not found!!"));
       return res.status(200).json(data[0]);
     });
   }
@@ -58,7 +58,7 @@ class postController {
     ];
 
     db.query(q, [VALUES], (err, data) => {
-      if (err) return res.status(500).json(err.message);
+      if (err) return res.json(createErrorMessage(500, "Insert post ERROR: " + err.message));
       return res.status(200).json("Add post successfully!");
     });
   }
@@ -69,8 +69,8 @@ class postController {
     const postId = req.params.id;
     const q = "SELECT * FROM `posts` WHERE id = ?";
     db.query(q, [postId], (err, data) => {
-      if (err) return res.status(500).json(err.message);
-      if (data.length === 0) return res.status(404).json("Post not found");
+      if (err) return res.json(createErrorMessage(500, "SELECT post ERROR: " + err.message));
+      if (data.length === 0 ) return res.json(createErrorMessage(404,"Post not found!!"));
       if (data[0].uid === currentUser || req.user.admin) {
         const q =
           "UPDATE posts SET `title` = ?, `desc` = ?, `img` = ?, `tags` = ? WHERE `id` =? AND `uid`=?";
@@ -81,7 +81,7 @@ class postController {
           req.body.tags,
         ];
         db.query(q, [...VALUES, postId, currentUser], (err, data) => {
-          if (err) res.status(500).json(err.message);
+          if (err) res.json(createErrorMessage(500, "UPDATE post ERROR: " + err.message));
         });
         return res.status(200).json("Update post successfully!");
       } else {
@@ -96,16 +96,17 @@ class postController {
     //check
     const q = "SELECT * FROM `posts` WHERE id = ?";
     db.query(q, [postId], (err, data) => {
-      if (err) return res.status(500).json(err.message);
-      if (data.length === 0) return res.status(404).json("Post not found");
+      if (err) return res.json(createErrorMessage(500, "SELECT post ERROR: " + err.message));
+      if (data.length === 0 ) return res.json(createErrorMessage(404,"Post not found!!"));
       if (data[0].uid === currentUser || req.user.admin) {
         const q = "DELETE FROM posts p WHERE id = ?";
         db.query(q, [postId], (err, data) => {
-          if (err) return res.status(500).json(err.message);
+          if (err) return res.json(createErrorMessage(500, "DELETE post ERROR: " + err.message));
+
         });
         return res.status(200).json("Delete successfully!");
       } else {
-        return res.status(403).json("You just deleted your post!");
+        return res.json(createErrorMessage(401,"You just deleted your post!"));
       }
     });
   }
@@ -115,34 +116,27 @@ class postController {
     //check post exists
     const q = "SELECT id, `like`, `uid` FROM `posts` WHERE id = ?";
     db.query(q, [postId], (err, posts) => {
-      if (err) return res.status(500).json("Select post EROR: " + err.message);
-      if (posts.length === 0) return res.status(404).json("Post not found");
+      if (err) return res.json(createErrorMessage(500, "SELECT post ERROR: " + err.message));
+      if (posts.length === 0 ) return res.json(createErrorMessage(404,"Post not found!!"));
       //check user already like post
       const q = "SELECT * FROM likes WHERE userId = ? AND postId = ? ";
       db.query(q, [req.user.id, postId], (err, likes) => {
-        if (err)
-          return res
-            .status(500)
-            .json("Select from likes ERROR: " + err.message);
+        if (err) return res.json(createErrorMessage(500, "SELECT post ERROR: " + err.message));
         // user not already like post
         if (likes.length === 0) {
           const q_insert = "INSERT INTO likes (userId, postId) VALUES (?)";
           const VALUES_INSERT_LIKE_TABLE = [req.user.id, postId];
           db.query(q_insert, [VALUES_INSERT_LIKE_TABLE], (err, data) => {
-            if (err)
-              return res.status(500).json("Insert likes ERROR: " + err.message);
+            if (err) return res.json(createErrorMessage(500, "INSERT post ERROR: " + err.message));
             const q_setLikePost = "UPDATE posts SET `like` = ? WHERE `id` = ?";
             const VALUES_LIKE_POST = [(posts[0].like += 1), postId];
             db.query(q_setLikePost, [...VALUES_LIKE_POST], (err, data) => {
-              if (err)
-                return res
-                  .status(500)
-                  .json("Update posts ERROR: " + err.message);
+              if (err) res.json(createErrorMessage(500, "UPDATE post ERROR: " + err.message));
               return res.status(200).json("Like successfully!!");
             });
           });
         } else {
-          return res.status(401).json("You already like this post!!");
+          return res.json(createErrorMessage (401,"You already like this post!!"));
         }
       });
     });
@@ -153,34 +147,36 @@ class postController {
     //check post exists
     const q = "SELECT id, `like`, `uid` FROM `posts` WHERE id = ?";
     db.query(q, [postId], (err, posts) => {
-      if (err) return res.status(500).json("Select post ERROR: " + err.message);
-      if (posts.length === 0) return res.status(404).json("Post not found");
+      if (err) return res.json(createErrorMessage(500, "SELECT post ERROR: " + err.message));
+      if (posts.length === 0 ) return res.json(createErrorMessage(404,"Post not found!!"));
+
       //check user already dislike post
       const q = "SELECT * FROM likes WHERE userId = ? AND postId = ? ";
       db.query(q, [req.user.id, postId], (err, likes) => {
-        if (err) return res.status(500).json("Select likes ERROR: " + err.message);
+        if (err) return res.json(createErrorMessage(500,"Select likes ERROR: " + err.message));
         if(likes.length != 0) {
           const q_DeleteLike = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ? "
           const VALUES_DETELE_LIKE = [req.user.id, postId]
           db.query(q_DeleteLike,[...VALUES_DETELE_LIKE],(err, data)=>{
-            if (err) return res.status(500).json("Delete likes ERROR: " + err.message);
+            if (err) return res.json(createErrorMessage(500,"DELETE likes ERROR: " + err.message));
             //set like current post
             const q_setLikePost = "UPDATE posts SET `like` = ? WHERE `id` = ?"
             const VALUES_UPDATE_POST = [posts[0].like -= 1, postId]
             db.query(q_setLikePost,[...VALUES_UPDATE_POST], (err, data) => {
-              if (err) return res.status(500).json("Update post ERROR: " + err.message);
+              if (err) return res.json(createErrorMessage(500,"UPDATE likes ERROR: " + err.message));
               return res.status(200).json("Dislike post updated successfully !!");
             });
           })
         }  
         else {
-          return res.status(401).json("You not like this post, please try again !");
+          return res.json(createErrorMessage(405,"You not like this post, please try again !"));
         }
       });
     });
   }
   recomendPost(req, res, next){
-    const tags = req.cookies.tags
+    const cookieTags = req.cookies.tags
+    
   }
   
 }
