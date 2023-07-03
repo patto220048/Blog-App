@@ -1,16 +1,31 @@
 import db from "../database/db.js";
-import moment from "moment";
 import createErrorMessage from "../errors/handleErr.js";
 class postController {
   //get all posts
   getPosts(req, res, next) {
-    const q = req.query.tags
-      ? "SELECT `title`, `desc`,`img`,`tags`,`createAt`, `updateAt`,`like` FROM posts p WHERE tags = ?"
-      : "SELECT * FROM posts";
-    db.query(q, [req.query.tags], (err, data) => {
-      if (err) return res.status(500).json(err);
-      if (data.length === 0 ) return res.status(404).json("Post not found!!");
-      res.cookie("tags", req.query.tags, {
+    const itemsPerPage = 10;
+    const currentPage = req.query.page < 0 ? 1 : req.query.page 
+    const offset = (currentPage - 1) * itemsPerPage;
+    const q = req.query.tags || req.query.title || req.query.username
+      ? `SELECT u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
+      FROM posts p JOIN users u ON p.uid = u.id \
+      WHERE tags LIKE '%${req.query.tags}%' \
+      OR title LIKE '%${req.query.title}%' \
+      OR u.username LIKE '%${req.query.username}%'\
+      ORDER BY p.createAt DESC
+      LIMIT ${itemsPerPage} \
+      OFFSET ${offset}
+      `
+      : 
+      `SELECT u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
+      FROM posts p JOIN users u ON p.uid = u.id \
+      ORDER BY p.createAt DESC\
+      LIMIT ${itemsPerPage} \
+      OFFSET ${offset}`;  
+    db.query(q, (err, data) => {
+      if (err) return res.json(createErrorMessage(500, "Select post ERROR: " + err.message));
+      if (data.length === 0 ) return res.json(createErrorMessage(404,"Post not found!!"));
+      res.cookie("tags", {tags: req.query.tags, title: req.query.title, username: req.query.username}, {
         httpOnly: true,
       });
       return res.status(200).json(data);
@@ -19,7 +34,9 @@ class postController {
   // get post
   getPost(req, res, next) {
     const q =
-      "SELECT p.id, `email`,`username`, `avatar`, `title`, `desc`,`img`, `createAt`, `updateAt`, `tags`,`like` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
+      "SELECT p.id, `email`,`username`, `avatar`, `title`, `desc`,`img`, `createAt`, `updateAt`, `tags`,`like`\
+      FROM users u JOIN posts p ON u.id = p.uid\
+      WHERE p.id = ?";
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
       if(data.length === 0) return res.status(404).json("Post not found!!");
@@ -31,12 +48,11 @@ class postController {
   addPost(req, res, next) {
     const currentUser = req.user.id;
     const q =
-      "INSERT INTO posts (`title`, `desc`, `img`,`date`,`uid`,`tags`) VALUES(?) ";
+      "INSERT INTO posts (`title`, `desc`, `img`,`uid`,`tags`) VALUES(?) ";
     const VALUES = [
-      req.body.title,
+      req.body.title ,
       req.body.desc,
       req.body.img,
-      moment().format(),
       currentUser,
       req.body.tags,
     ];
@@ -164,7 +180,7 @@ class postController {
     });
   }
   recomendPost(req, res, next){
-
+    const tags = req.cookies.tags
   }
   
 }
