@@ -5,35 +5,48 @@ import Recommend from '../recommend/Recommend';
 import ReactMarkdown from 'react-markdown';
 import parse from 'html-react-parser';
 import Comments from '../comments/Comments';
+import 'react-quill/dist/quill.snow.css';
 
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
-    const markdown =`
-     <li>Item 1</li><li>Item 2</li> <br>
-     <pre class="ql-syntax" spellcheck="false">hello adfa f
-    </pre>
-    <pre class="ql-syntax" spellcheck="false">const 2 = 123
-    </pre>
-    `
-    
+    const markdown =
+        "<h1># Lorem adfa df dfad adf adf</h1><p><br></p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown <h1># printer</h1> <br> took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p><p> </p><p><br></p><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Loreis 	Lorem Ipsum is simply dummy text of the<h1> # printing> </h1> <br> and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p>&nbsp;&nbsp;&nbsp;</p>";
+    const getText = (html) => {
+        const arrs = [];
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const collection = doc.body.getElementsByTagName('h1');
+        for (let i = 0; i < collection.length; i++) {
+            arrs.push(collection[i].innerText);
+        }
+        return arrs;
+    };
+  
+    const h1Item = getText(markdown);
+
     const H2 = ({ node, ...props }) => {
+        
         return <h2 id={node.position?.start.line.toString()}>{props.children}</h2>;
     };
     const ankerLink = ({ node, ...props }) => {
+        console.log(node.position)
         return <a href={'#' + node.position?.start.line.toString()}>{props.children}</a>;
     };
+
     return (
         <div className={`${style.containerDetail} ${style[theme]}`}>
             <div className={style.postFlow}>
-                <ReactMarkdown
-                    allowedElements={['h1', 'h2']}
-                    components={{
-                        h1: ankerLink,
-                        h2: ankerLink,
-                    }}
-                >
-                    {markdown}
-                </ReactMarkdown>
+                {h1Item.map((h1, index) => (
+                    <ReactMarkdown
+                        key={index}
+                        allowedElements={['h1', 'h2',]}
+                        components={{
+                            h1: ankerLink,
+                            h2: ankerLink,
+                        }}
+                    >
+                        {h1}
+                    </ReactMarkdown>
+                ))}
             </div>
             <div className={style.postLike}>
                 <div className={style.likeItem}>
@@ -78,9 +91,7 @@ function DetailPost() {
                     <span>@123</span>
                 </div>
 
-                <div className={style.content}>
-                    {parse(markdown)}
-                </div>
+                <div className={style.content}>{parse(markdown)}</div>
                 <div>
                     <Comments />
                 </div>
