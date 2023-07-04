@@ -3,18 +3,19 @@ import style from './DetailPost.module.scss';
 import { ThemeContext } from '../../context/ThemeContext';
 import Recommend from '../recommend/Recommend';
 import ReactMarkdown from 'react-markdown';
-
+import parse from 'html-react-parser';
 import Comments from '../comments/Comments';
+
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
-    const getText = (html) => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent;
-    }; 
-    const h1 = 1
-    const markdown =`<p>## 12312312 123123123</p>`
-    const changeText = getText(markdown)
-    console.log(changeText)
+    const markdown =`
+     <li>Item 1</li><li>Item 2</li> <br>
+     <pre class="ql-syntax" spellcheck="false">hello adfa f
+    </pre>
+    <pre class="ql-syntax" spellcheck="false">const 2 = 123
+    </pre>
+    `
+    
     const H2 = ({ node, ...props }) => {
         return <h2 id={node.position?.start.line.toString()}>{props.children}</h2>;
     };
@@ -25,13 +26,13 @@ function DetailPost() {
         <div className={`${style.containerDetail} ${style[theme]}`}>
             <div className={style.postFlow}>
                 <ReactMarkdown
-                    allowedElements={['h2','h3']}
+                    allowedElements={['h1', 'h2']}
                     components={{
-                        h2: H2,
+                        h1: ankerLink,
                         h2: ankerLink,
                     }}
                 >
-                    {changeText}
+                    {markdown}
                 </ReactMarkdown>
             </div>
             <div className={style.postLike}>
@@ -77,7 +78,9 @@ function DetailPost() {
                     <span>@123</span>
                 </div>
 
-                <div className={style.content}>{changeText}</div>
+                <div className={style.content}>
+                    {parse(markdown)}
+                </div>
                 <div>
                     <Comments />
                 </div>
