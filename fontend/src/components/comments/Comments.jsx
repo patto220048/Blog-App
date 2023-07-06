@@ -28,7 +28,7 @@ function Comments() {
     ]
     return (
         <div className={styled.comments}>
-            <h1>Comments</h1>
+            <h2>Comments</h2>
 
             <div className={styled.inputComment}>
                 <div className={styled.currentUserComment}>

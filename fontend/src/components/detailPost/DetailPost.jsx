@@ -1,15 +1,33 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import style from './DetailPost.module.scss';
 import { ThemeContext } from '../../context/ThemeContext';
 import Recommend from '../recommend/Recommend';
 import ReactMarkdown from 'react-markdown';
-import parse, { domToReact,attributesToProps  } from 'html-react-parser';
+import parse, { domToReact, attributesToProps } from 'html-react-parser';
 import Comments from '../comments/Comments';
 import 'react-quill/dist/quill.snow.css';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
-    const markdown =
-        `<h1># Lorem adfa df dfad adf adf</h1><p><br></p><p>Lorem Ipsum is simply <div id="main"> dummy </div> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown <h1># printer</h1> <br> took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p><p> </p><p><br></p><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Loreis 	Lorem Ipsum is simply dummy text of the<h1> # printing> </h1> <br> and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p>&nbsp;&nbsp;&nbsp;</p>`;
+    const markdown = `
+    <h1><strong># day la tieu de 1 </strong></h1><p><em style="color: rgb(32, 33, 34);">Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui do</em><strong style="color: rgb(32, 33, 34);"><em>lorem ipsum</em></strong><em style="color: rgb(32, 33, 34);">, quia&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>dolor sit, amet, consectetur, adipisci</em></strong><em style="color: rgb(32, 33, 34);">&nbsp;v</em><strong style="color: rgb(32, 33, 34);"><em>elit, sed</em></strong><em style="color: rgb(32, 33, 34);">&nbsp;quia non numquam&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>eius mod</em></strong><em style="color: rgb(32, 33, 34);">i&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>tempor</em></strong><em style="color: rgb(32, 33, 34);">a&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>incidunt, ut labore et dolore magna</em></strong><em style="color: rgb(32, 33, 34);">m&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>aliqua</em></strong><em style="color: rgb(32, 33, 34);">m quaerat voluptatem.&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>Ut enim ad minim</em></strong><em style="color: rgb(32, 33, 34);">a&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>veniam, quis nostru</em></strong><em style="color: rgb(32, 33, 34);">m&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>exercitation</em></strong><em style="color: rgb(32, 33, 34);">em&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>ullam co</em></strong><em style="color: rgb(32, 33, 34);">rporis suscipit</em><strong style="color: rgb(32, 33, 34);"><em>&nbsp;laborios</em></strong><em style="color: rgb(32, 33, 34);">am,&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>nisi ut aliquid ex ea commodi consequat</em></strong><em style="color: rgb(32, 33, 34);">ur?&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>Quis aute</em></strong><em style="color: rgb(32, 33, 34);">m vel eum&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>iure reprehenderit,</em></strong><em style="color: rgb(32, 33, 34);">&nbsp;qui&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>in</em></strong><em style="color: rgb(32, 33, 34);">&nbsp;ea&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>voluptate velit esse</em></strong><em style="color: rgb(32, 33, 34);">, quam nihil molestiae&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>c</em></strong><em style="color: rgb(32, 33, 34);">onsequatur, vel&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>illum</em></strong><em style="color: rgb(32, 33, 34);">, qui&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>dolore</em></strong><em style="color: rgb(32, 33, 34);">m&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>eu</em></strong><em style="color: rgb(32, 33, 34);">m&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>fugiat</em></strong><em style="color: rgb(32, 33, 34);">, quo voluptas&nbsp;</em><strong style="color: rgb(32, 33, 34);"><em>nulla pariatur</em></strong><em style="color: rgb(32, 33, 34);">?</em></p><h1># day la tieu de 2</h1><p><br></p><pre class="ql-syntax" spellcheck="false">const h1 = 10 ;
+    </pre><blockquote>text 1 </blockquote><ol><li><strong>list items 1</strong></li><li><strong>list items 2</strong><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAAAvGQEA6AMAAC8ZAQDoAwAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAQAAQAAANwFAAADoAQAAQAAACQEAAAAAAAA/9sAQwABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB/9sAQwEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB/8AAEQgEJAXcAwERAAIRAQMRAf/EAB8AAAEDBQEBAQAAAAAAAAAAAAAGBwgCAwQFCQEKC//EAGsQAAEDAgUCBAMFBgQEAgAALwECAwQFEQAGEiExB0EIEyJRFGFxCTKBkaEVI0KxwfAWUtHhCiQzYvEXJTRDcpIYOVOCoiZEdni3wjVzd4eytba40hk3OGNkRUZJVld5g5OXo6TDxMbU1eL/xAAeAQEAAAcBAQEAAAAAAAAAAAAAAQIDBAUGBwgJCv/EAFgRAAEDAwMCBAMFBgUCBAEAGwECAxEABCEFEjEGQRMiUWEHcYEUMpGh8AgjQrHB0RUzUuHxJGIWNENyU4KSsgklc6IXRIMYNWOzwtImRVST0zZGVbTidf/aAAwDAQACEQMRAD8A+4DGYrH0d0mxNiDsbEb7nfa47bHfEqhIjaFZGDwc98jHyM1AiR+Y9iOD+uaRmb+n+VM8IQnMFPW483YInR1NNzG0hCkAIW8zIb0hJAN2CSUpPAJPNutvhP0d19B6hsHnVMgKt3rRy3auUKSgoKUuXNtctBBC3CR4e6QgTAIVvXS3xF6s6RdB0a+ZZt/vOWr7b7lu6sFMLcSzcMuExIEOAQTIJIhlJ/hvaaucu5mmNqSApLNTLD11A3IUqNT4aNJSALagSQbngY8+6z+yJaeIpzpnqy8t2wlJRZ6l4DqC4VkEqVb6ZZpjbsMBaSCmdxkCuy6f+0Y+6QjXunbRTYJBc04PtEiP4Ev392vdJIlSCIIx3rVs9NeoFDGpcKLUWRsX4UmGzZCCNw1IqReJ0m9ggkkEabkDHL9b/Z8+JWhO+Gzp9rrjKCr/AKjT73TLYFtBHn8G81RL0lPm2+Hu7BM4rZ2Pil0HroQE3Vzp7qjKmb5i7WW1uR5VvNWCGSAQUlSXNoAndBmtqy9VYQLc6DJjLbNjrZW4km2q+pkrTuDe+ojnvtjmOo9P67oy1t6pouoWS2TtWpds68g7hvG1y3DzahEfdWoSCJwYruf4XeqDtle212lSSQUXDSTJIEFLmxY7n7vAEYgnNRLQtCR/FvtcAGwvbSqygR3J9/cYi0sOpmCkHI8QFK490EJUAAMSkDB4gxT2KCuDJHGSAJ53iUGY+6CSIzAIqxI8p1BF7EhV
+    
+         `;
+    // TODO: add id for h1 , custom text
+    useEffect(() => {
+        const el = document.body.getElementsByTagName('h1');
+        for (let i = 0; i < el.length; i++) {
+            el[i].innerHTML = el[i].innerHTML.replace(/#\s/g, '');
+            const id = el[i].setAttribute('id', el[i].innerText.toLowerCase().replace(/\s/g, '-'));
+
+            const scrollElement = document.getElementById(el[i].innerText.toLowerCase().replace(/\s/g, '-'));
+            if (scrollElement) {
+                // 👇 Will scroll smoothly to the top of the next section
+                scrollElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, []);
+    // parse makdown get arr h1
     const getText = (html) => {
         const arrs = [];
         const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -19,24 +37,18 @@ function DetailPost() {
         }
         return arrs;
     };
-    // console.log(parse(markdown))
+    //get h1 element
     const h1Item = getText(markdown);
+
     // TODO: config markdown
     const H2 = ({ node, ...props }) => {
         return <h2 id={node.position?.start.line.toString()}>{props.children}</h2>;
     };
     const ankerLink = ({ node, ...props }) => {
-        // console.log(props);
         const id = props.children[0].toLowerCase().replace(/\s/g, '-');
-        return <a href={id}>{props.children}</a>;
+        return <a href={'#' + id}>{props.children}</a>;
     };
     // TODO: config html-react-parser
-    const options = {
-        replace: domNode => {
-            
-            console.log(domNode, { depth: null });
-        }
-      }
     return (
         <div className={`${style.containerDetail} ${style[theme]}`}>
             <div className={style.postFlow}>
@@ -96,7 +108,7 @@ function DetailPost() {
                     <span>@123</span>
                 </div>
 
-                <div className={style.content}>{parse(markdown, options)}</div>
+                <div className={style.content}>{parse(markdown)}</div>
                 <div>
                     <Comments />
                 </div>

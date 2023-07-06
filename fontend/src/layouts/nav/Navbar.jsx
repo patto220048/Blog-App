@@ -11,7 +11,7 @@ function NavBar() {
 
     return (
         <nav className={`${style.nav} ${style[theme]}`}>
-            <h1 className="text">Logo</h1>
+            <h2 className="text">Logo</h2>
             <ul className={style.listItemNav}>
                 {/* <li>
                 <NavLink to="/" style={{ textDecoration: 'none'}}>

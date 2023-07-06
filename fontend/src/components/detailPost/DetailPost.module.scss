@@ -4,7 +4,7 @@
 .containerDetail {
     display: flex;
     justify-content: space-between;
-
+    flex-wrap: wrap;
     .postFlow {
         flex: 0.5;
         display: flex;
@@ -79,6 +79,8 @@
             font-size: 18px;
             line-height: 30px;
             //react-qill custom
+            scroll-behavior: auto;
+            scroll-behavior: smooth;
             pre {
                 color: aliceblue;
                 background-color: rgb(24, 25, 25);
