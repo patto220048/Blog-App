@@ -1,8 +1,16 @@
 import db from "../database/db.js";
 import createErrorMessage from "../errors/handleErr.js";
+
+const customString = (str) => {
+  const string = str.toLowerCase().replace(/\s/g, ' ');
+  return string
+}
+
 class postController {
+
   //get all posts
   getPosts(req, res, next) {
+    console.log(customString(req.query.tags))
     const itemsPerPage = 10;
     const currentPage = req.query.page < 0 ? 1 : req.query.page;
     const offset = (currentPage - 1) * itemsPerPage;
@@ -73,7 +81,7 @@ class postController {
       req.body.desc,
       req.body.img,
       currentUser,
-      req.body.tags,
+      customString(req.body.tags),
     ];
 
     db.query(q, [VALUES], (err, data) => {
