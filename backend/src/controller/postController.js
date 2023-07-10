@@ -1,22 +1,20 @@
 import db from "../database/db.js";
 import createErrorMessage from "../errors/handleErr.js";
 
-const customString = (str) => {
-  const string = str.toLowerCase().replace(/\s/g, ' ');
-  return string
-}
+const customString = (str) => { 
+  const string = str.toLowerCase().replace(/ \s/g, " ");
+  return string;
+};
 
 class postController {
-
   //get all posts
   getPosts(req, res, next) {
-    console.log(customString(req.query.tags))
     const itemsPerPage = 10;
     const currentPage = req.query.page < 0 ? 1 : req.query.page;
     const offset = (currentPage - 1) * itemsPerPage;
     const q =
       req.query.tags || req.query.title || req.query.username
-        ? `SELECT u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
+        ? `SELECT p.id postId,u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
       FROM posts p JOIN users u ON p.uid = u.id \
       WHERE tags LIKE '%${req.query.tags}%' \
       OR title LIKE '%${req.query.title}%' \
@@ -25,7 +23,7 @@ class postController {
       LIMIT ${itemsPerPage} \
       OFFSET ${offset}
       `
-        : `SELECT u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
+        : `SELECT p.id postId,u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
       FROM posts p JOIN users u ON p.uid = u.id \
       ORDER BY p.createAt DESC\
       LIMIT ${itemsPerPage} \
@@ -257,19 +255,18 @@ class postController {
     const q =
       cookieTags.tags || cookieTags.title || cookieTags.username
         ? `
-      SELECT u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
+      SELECT p.id postId,u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
       FROM posts p JOIN users u ON p.uid = u.id \
-      WHERE (NOT p.id = ${req.cookies.postid} AND tags LIKE '%${cookieTags.tags}%') \
-      OR ( NOT p.id = ${req.cookies.postid} AND title LIKE '%${cookieTags.title}%') \
-      OR ( NOT p.id = ${req.cookies.postid} AND username LIKE '%${cookieTags.username}%')\
+      WHERE (NOT p.id = ${req.cookies.postid || req.params.id } AND tags LIKE '%${cookieTags.tags}%') \
+      OR ( NOT p.id = ${req.cookies.postid || req.params.id} AND title LIKE '%${cookieTags.title}%') \
+      OR ( NOT p.id = ${req.cookies.postid || req.params.id} AND username LIKE '%${cookieTags.username}%')\
       ORDER BY p.createAt DESC\
       LIMIT 5
-
       `
         : `
-      SELECT u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
+      SELECT p.id postId,u.username, u.avatar, p.title, p.desc, p.img, p.like, p.tags, p.createAt, p.updateAt \
       FROM posts p JOIN users u ON p.uid = u.id\
-      WHERE NOT p.id = ${req.cookies.postid}\
+      WHERE NOT p.id = ${req.cookies.postid || req.params.id}\
       ORDER BY p.createAt DESC\
       LIMIT 5
 

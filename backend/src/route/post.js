@@ -7,7 +7,7 @@ router.get('/', postController.getPosts)
 
 router.get('/:id', postController.getPost)
 
-router.get('/v1/recomend', postController.recomendPost)
+router.get('/v1/recomend/:id', postController.recomendPost)
 
 router.post('/',verifyToken.verifyUser, postController.addPost)
 
