@@ -27,7 +27,7 @@ function Comment() {
             <div className={styled.avatar}>
                 <div className={styled.avatarItem}>
                     <img src="" alt="" />
-                    <h1>@name</h1>
+                    <h2>@name</h2>
                     <span>time</span>
                 </div>
                 <p>

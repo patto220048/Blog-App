@@ -1,38 +1,77 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import style from './DetailPost.module.scss';
 import { ThemeContext } from '../../context/ThemeContext';
 import Recommend from '../recommend/Recommend';
 import ReactMarkdown from 'react-markdown';
-
+import parse, { domToReact, attributesToProps } from 'html-react-parser';
 import Comments from '../comments/Comments';
+import 'react-quill/dist/quill.snow.css';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
+    const markdown = `
+    <h1># day la tieu de 1 day la tieu de 1day la tieu de 1day la tieu de 1</h1><p>adadfadf ad fad af a dfa da dfa dfa da df<strong> ad afdada dfa dadadfa daf da dfad </strong></p><p><strong>asd ad </strong>asdf adf adf adf asd s ad</p><p> a</p><p>d</p><p>a d</p><p>adfa dfdf</p>
+    <h1># day la tieu de 3</h1>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    <h1># day la tieu de 2</h1>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    <h1># day la tieu de 5</h1>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    `;
+    // TODO: add id for h1 , custom text
+    useEffect(() => {
+        const el = document.body.getElementsByTagName('h1');
+        for (let i = 0; i < el.length; i++) {
+            el[i].innerHTML = el[i].innerHTML.replace(/#\s/g, '');
+            el[i].setAttribute('id', el[i].innerText.toLowerCase().replace(/\s/g, '-'));
+        }
+    }, []);
+    // parse makdown get arr h1
     const getText = (html) => {
+        const arrs = [];
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent;
-    }; 
-    const h1 = 1
-    const markdown =`<p>## 12312312 123123123</p>`
-    const changeText = getText(markdown)
-    console.log(changeText)
-    const H2 = ({ node, ...props }) => {
-        return <h2 id={node.position?.start.line.toString()}>{props.children}</h2>;
+        const collection = doc.body.getElementsByTagName('h1');
+        for (let i = 0; i < collection.length; i++) {
+            arrs.push(collection[i].innerText);
+        }
+        return arrs;
     };
+    const handleScroll = (el) => {
+        const element = document.getElementById(el).scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });
+    
+    };
+    //get h1 element
+    const h1Item = getText(markdown);
+
+    // TODO: config markdown
     const ankerLink = ({ node, ...props }) => {
-        return <a href={'#' + node.position?.start.line.toString()}>{props.children}</a>;
+        const id = props.children[0].toLowerCase().replace(/\s/g, '-');
+        return (
+            <a href={'#' + id} onClick={() => handleScroll(id)}>
+                {props.children}
+            </a>
+        );
     };
+    // TODO: config html-react-parser
     return (
         <div className={`${style.containerDetail} ${style[theme]}`}>
             <div className={style.postFlow}>
-                <ReactMarkdown
-                    allowedElements={['h2','h3']}
-                    components={{
-                        h2: H2,
-                        h2: ankerLink,
-                    }}
-                >
-                    {changeText}
-                </ReactMarkdown>
+                <span>On this page</span>
+                {h1Item.map((h1, index) => (
+                    <ReactMarkdown
+                        key={index}
+                        allowedElements={['h1', 'h2']}
+                        components={{
+                            h1: ankerLink,
+                            h2: ankerLink,
+                        }}
+                    >
+                        {h1}
+                    </ReactMarkdown>
+                ))}
             </div>
             <div className={style.postLike}>
                 <div className={style.likeItem}>
@@ -77,7 +116,7 @@ function DetailPost() {
                     <span>@123</span>
                 </div>
 
-                <div className={style.content}>{changeText}</div>
+                <div className={style.content}>{parse(markdown)}</div>
                 <div>
                     <Comments />
                 </div>
