@@ -8,7 +8,10 @@ function NavBar() {
     const { theme, setTheme } = useContext(ThemeContext);
     const isDarkTheme = theme === 'dark';
     const isLightTheme = theme === 'light';
-
+    const handleTheme = () =>{
+        setTheme(theme === 'light' ? 'dark' : 'light');
+        localStorage.setItem('mode', theme === 'light' ? 'dark' : 'light');
+    }
     return (
         <nav className={`${style.nav} ${style[theme]}`}>
             <h2 className="text">Logo</h2>
@@ -29,7 +32,7 @@ function NavBar() {
                 <li>
                     <span>Contact</span>
                 </li>
-                <li onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                <li onClick={handleTheme}>
                     {(isDarkTheme && (
                         <span>
                             <svg
