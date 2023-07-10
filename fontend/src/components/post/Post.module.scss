@@ -18,7 +18,7 @@
         color: $red-400;
     }
     .postName {
-        font-size: 25px;
+        font-size:30px;
         font-weight: 600;
     }
     .auther {
@@ -34,7 +34,7 @@
         }
         .name {
             font-size: 15px;
-            font-weight: 400;
+            font-weight: 600;
             cursor: pointer;
         }
     }
@@ -47,6 +47,8 @@
     .tags {
         display: flex;
         gap: 8px;
+        padding-inline-start: 0;
+        list-style-type: none;
         .tagItem {
             font-weight: 500;
             background-color: $pink-400;
