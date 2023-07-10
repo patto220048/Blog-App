@@ -26,7 +26,7 @@ function Comment() {
         <div className={styled.comment}>
             <div className={styled.avatar}>
                 <div className={styled.avatarItem}>
-                    <img src="" alt="" />
+                    <img src={import.meta.env.VITE_PUBLIC_FOLDER + "1.jpg"  } alt="" />
                     <h2>@name</h2>
                     <span>time</span>
                 </div>

@@ -13,7 +13,7 @@ import SignUp from './register/signup/SignUp';
 import ResetPass from './register/resetPass/ResetPass';
 function App() {
     const { theme } = useContext(ThemeContext);
-
+    console.log(import.meta.env.VITE_PUBLIC_FOLDER + "1.jpg")
     //Protect router
     const currentUser = true;
 
