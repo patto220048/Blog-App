@@ -42,6 +42,7 @@
         padding-top: 120px;
 
         .likeItem {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -53,14 +54,50 @@
                 font-size: 20px;
                 font-weight: 400;
             }
+            .menu {
+                width: 110px;
+                position: absolute;
+                bottom: -80px;
+                left: 0;
+                z-index: 10;
+                padding: 5px;
+                border-radius: 5px;
+                .items {
+                    margin: 0;
+                    list-style: none;
+                    display: flex;
+                    gap: 5px;
+                    flex-direction: column;
+                    border-radius: 5px;
+                    padding-inline-start: 0px;
+                    .item {
+                        display: flex;
+                        align-items: center;
+                        gap: 3px;
+                        padding: 5px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        p {
+                            margin: 0;
+                            font-size: 14px;
+                            font-weight: 600;
+                            padding: 5px;
+                        }
+                        &:hover {
+                            color: $pink-700;
+                        }
+                    }
+                }
+            }
         }
     }
+
     .wapper {
         display: flex;
         flex-direction: column;
         gap: 20px;
         flex: 2.2;
-        
+
         .head {
             gap: 20px;
             width: 100%;
@@ -115,10 +152,24 @@
 }
 .light {
     color: $dark-1000;
+    .postLike {
+        .likeItem {
+            .menu {
+                background-color: $gray-200;
+                .items {
+                    color: black;
+                    .item {
+                        &:hover {
+                            background-color: $gray-300;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 .dark {
     color: $white;
-    background-color: $mainColor;
     .postFlow {
         a {
             padding-left: 20px;
@@ -128,6 +179,21 @@
             text-decoration: none;
             &:hover {
                 color: $gray-300;
+            }
+        }
+    }
+    .postLike {
+        .likeItem {
+            .menu {
+                background-color: $gray-200;
+                .items {
+                    color: black;
+                    .item {
+                        &:hover {
+                            background-color: $gray-300;
+                        }
+                    }
+                }
             }
         }
     }

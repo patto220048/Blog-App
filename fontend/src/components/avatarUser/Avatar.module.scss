@@ -34,16 +34,16 @@
     .menu {
         position: absolute;
         right: 0;
-        bottom: calc(-100% - 200px);
-        right: 10px;
-        .listItems {
-            width: 150px;
+        bottom: calc(-100% - 215px);
+        // right: 10px;
+        .items {
+            width: 180px;
             display: flex;
             gap: 5px;
             flex-direction: column;
-            padding: 5px;
+            padding: 15px;
             border-radius: 5px;
-            
+
             .item {
                 display: flex;
                 align-items: center;
@@ -51,18 +51,19 @@
                 padding: 5px;
                 border-radius: 5px;
                 cursor: pointer;
-                p{
+                p {
                     margin: 0;
                     font-size: 16px;
                     font-weight: 600;
                     padding: 10px;
-                    
+                }
+                span {
+                    padding-left: 5px;
                 }
                 &:hover {
                     color: $pink-700;
                 }
             }
-            
         }
     }
 }
@@ -82,12 +83,13 @@
     //hover in menu
     :hover {
         background-color: $gray-300;
+        
     }
 }
 .light {
     background-color: $mainColor;
     color: $white;
-     //hover in menu
+    //hover in menu
     :hover {
         background-color: $gray-500;
     }

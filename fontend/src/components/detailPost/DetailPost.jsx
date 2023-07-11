@@ -9,6 +9,25 @@ import 'react-quill/dist/quill.snow.css';
 import { downIcon, optionIcon, upIcon } from '../../svg/Icon';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
+    // open menu post
+    const [isMenuPost, setIsMenuPost] = useState(false);
+    const toggleMenuPost = (e) => {
+        e.stopPropagation();
+        setIsMenuPost(!isMenuPost);
+    };
+    //click outside menu post
+
+    useEffect(() => {
+        const handleClickOutside = () => {
+            setIsMenuPost(false);
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
     const markdown = `
     <h1># day la tieu de 1 day la tieu de 1day la tieu de 1day la tieu de 1</h1><p>adadfadf ad fad af a dfa da dfa dfa da df<strong> ad afdada dfa dadadfa daf da dfad </strong></p><p><strong>asd ad </strong>asdf adf adf adf asd s ad</p><p> a</p><p>d</p><p>a d</p><p>adfa dfdf</p>
     <h1># day la tieu de 3</h1>
@@ -78,11 +97,24 @@ function DetailPost() {
                     <div>{theme === 'light' ? upIcon('#333333', 24, 24) : upIcon('#FFFFFF', 24, 24)}</div>
                     <span>2</span>
                     <div>{theme === 'light' ? downIcon('#333333', 24, 24) : downIcon('#FFFFFF', 24, 24)}</div>
-                    <div>
+                    <div onClick={toggleMenuPost}>
                         {theme === 'light' ? optionIcon('#333333', 24, 24) : optionIcon('#ffffff', 24, 24)}
                     </div>
+                    {isMenuPost && (
+                        <div className={`${style.menu}`}>
+                            <ul className={`${style.items} ${style[theme]}`}>
+                                <li className={style.item}>
+                                    <p>Role: Admin</p>
+                                </li>
+                                <li className={style.item}>
+                                    <p>Role: Admin</p>
+                                </li>
+                            </ul>
+                        </div>
+                    )}
                 </div>
             </section>
+
             <div className={style.wapper}>
                 <img
                     src="https://images.unsplash.com/photo-1685444213745-fab7153181f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60"

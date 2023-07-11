@@ -4,18 +4,16 @@ import Tippy from '@tippyjs/react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { Link } from 'react-router-dom';
 import { plusIcon, infoIcon, logOutIcon, adminIcon, settingIcon } from '../../svg/Icon';
-
 function Avatar() {
     //light mode
     const { theme } = useContext(ThemeContext);
-    const isDarkTheme = theme === 'dark';
-    const isLightTheme = theme === 'light';
     //open menu
     const [onMenu, setOnMenu] = useState(false);
     const toggleMenu = (e) => {
         e.stopPropagation();
         setOnMenu(!onMenu);
     };
+    // click outside menu
     useEffect(() => {
         const handleClickOutside = () => {
             setOnMenu(false);
@@ -27,13 +25,14 @@ function Avatar() {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+
     return (
         <div className={style.avatar}>
             <div className={style.wapper}>
                 <Tippy content={<span className={`${style.span}`}>Create post</span>}>
                     <div className={style.addPost}>
                         <Link to="/blog/create">
-                            {isLightTheme ? plusIcon('#333333', 20, 20) : plusIcon('#ffffff', 20, 20)}
+                            {theme === 'light' ? plusIcon('#333333', 20, 20) : plusIcon('#ffffff', 20, 20)}
                         </Link>
                     </div>
                 </Tippy>
@@ -47,8 +46,8 @@ function Avatar() {
                 </Tippy>
             </div>
             {onMenu && (
-                <div className={`${style.menu}`}>
-                    <ul className={`${style.listItems} ${style[theme]}`}>
+                <section className={`${style.menu}`}>
+                    <ul className={`${style.items} ${style[theme]}`}>
                         <li className={style.item}>
                             <span>
                                 {theme === 'light' ? adminIcon('#FFFFFF', 15, 15) : adminIcon('#333333', 15, 15)}
@@ -57,13 +56,7 @@ function Avatar() {
                         </li>
                         <li className={style.item}>
                             <span>{theme === 'light' ? infoIcon('#FFFFFF', 15, 15) : infoIcon('#333333', 15, 15)}</span>
-                            <p>Infimaton</p>{' '}
-                        </li>
-                        <li className={style.item}>
-                            <span>
-                                {theme === 'light' ? logOutIcon('#FFFFFF', 15, 15) : logOutIcon('#333333', 15, 15)}
-                            </span>
-                            <p> Log out</p>
+                            <p>Infomation</p>
                         </li>
                         <li className={style.item}>
                             <span>
@@ -71,8 +64,14 @@ function Avatar() {
                             </span>
                             <p>Setting</p>
                         </li>
+                        <li className={style.item}>
+                            <span>
+                                {theme === 'light' ? logOutIcon('#FFFFFF', 15, 15) : logOutIcon('#333333', 15, 15)}
+                            </span>
+                            <p> Log out</p>
+                        </li>
                     </ul>
-                </div>
+                </section>
             )}
         </div>
     );
