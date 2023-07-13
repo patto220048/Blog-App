@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import parse, { domToReact, attributesToProps } from 'html-react-parser';
 import Comments from '../comments/Comments';
 import 'react-quill/dist/quill.snow.css';
-import { downIcon, optionIcon, upIcon } from '../../svg/Icon';
+import { downIcon, optionIcon, upIcon, verifyIcon } from '../../svg/Icon';
 function DetailPost() {
     const { theme } = useContext(ThemeContext);
     // open menu post
@@ -124,26 +124,45 @@ function DetailPost() {
                     <span className={style.time}>4 Jan 2020</span>
                     <span className={style.title}>Grid system for better Design User Interface</span>
                 </div>
-                <div className="avatar-1 gap">
-                    <img
-                        src="https://images.unsplash.com/photo-1685444213745-fab7153181f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60"
-                        alt=""
-                        style={{ width: '40px', height: '40px' }}
-                    />
-                    <span>@123</span>
-                </div>
 
                 <div className={style.content}>{parse(markdown)}</div>
                 <div>
                     <Comments />
                 </div>
             </div>
-            <div className={style.recommend}>
-                <h2>Recomend</h2>
-                <Recommend />
-                <Recommend />
-                <Recommend />
-                <Recommend />
+            <div className={style.rightSide}>
+                <div className={style.author}>
+                    <div className={style.infoAuthor}>
+                        <img
+                            src="https://images.unsplash.com/photo-1689172044594-88eaec1c70fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                            alt=""
+                        />
+                        <h2>DINH HUU PHAT</h2>
+                        <span>{theme === 'light' ? verifyIcon('#333333', 20, 20) : verifyIcon('#FFFFFF', 20, 20)}</span>
+                    </div>
+                    <p>Hello world </p>
+
+                    <h5>
+                        JOINED : <span>2023-00-00</span>{' '}
+                    </h5>
+                </div>
+                <h3>More from DINH HUU PHAT </h3>
+                <div className={style.recomend}>
+                    <div>
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                        <Recommend />
+                    </div>
+                </div>
+
+
             </div>
         </div>
     );
