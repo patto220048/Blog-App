@@ -27,7 +27,7 @@ function Comment() {
         };
     }, []);
     return (
-        <div className={styled.comment}>
+        <div className={`${styled.comment} ${styled[theme]}`}>
             <div className={styled.avatar}>
                 <div className={styled.avatarItem}>
                     <img src={import.meta.env.VITE_PUBLIC_FOLDER + '1.jpg'} alt="" />
@@ -54,7 +54,7 @@ function Comment() {
                         <div>{isLightTheme ? optionIcon("#333333",20,20) : optionIcon("#ffffff",20,20)}</div>
                         {onOptionComment && (
                             <div className={styled.optionComment}>
-                                <ul className={styled.optionItem}>
+                                <ul className={styled.optionItems}>
                                     <li className={styled.itemComment}>Delete</li>
                                     <li className={styled.itemComment}>Report</li>
                                 </ul>

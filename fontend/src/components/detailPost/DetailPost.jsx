@@ -139,6 +139,10 @@ function DetailPost() {
                 </div>
             </div>
             <div className={style.recommend}>
+                <h2>Recomend</h2>
+                <Recommend />
+                <Recommend />
+                <Recommend />
                 <Recommend />
             </div>
         </div>
