@@ -2,7 +2,8 @@
 @import './gobal';
 
 .main{
-
+    display: flex;
+    flex-direction: column;
 }
 .dark{
     background-color: $mainColor;

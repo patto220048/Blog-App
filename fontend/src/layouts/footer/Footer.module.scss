@@ -1,0 +1,37 @@
+@import '../../color';
+@import '../../gobal';
+.footer {
+    .wapper {
+        .copyRight {
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 30px;
+            gap: 5px;
+            color: $descColor;
+            a {
+                color: $descColor;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.light {
+    .wapper {
+        .copyRight {
+        
+            border-top: 1px solid rgba($color: $dark-1000, $alpha: 0.1) ;
+        }
+    }
+}
+.dark {
+    .wapper {
+        .copyRight {
+            
+            border-top: 1px solid rgba($color: $white, $alpha: 0.1) ;
+
+        }
+    }
+}

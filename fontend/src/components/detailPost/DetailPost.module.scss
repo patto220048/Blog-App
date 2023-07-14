@@ -1,10 +1,21 @@
 @import '../../color';
 @import '../../gobal';
 
+
+
 .containerDetail {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    .processBar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: $red-700;
+        transform-origin: 0%;
+    }
     .postFlow {
         flex: 0.5;
         display: flex;
@@ -138,6 +149,10 @@
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
+            }
+            h1{
+                
+                scroll-behavior: smooth;
             }
         }
     }

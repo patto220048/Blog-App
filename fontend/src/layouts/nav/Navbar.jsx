@@ -14,7 +14,7 @@ function NavBar() {
         localStorage.setItem('mode', theme === 'light' ? 'dark' : 'light');
     };
     return (
-        <nav className={`${style.nav} ${style[theme]}`}>
+        <div className={`${style.nav} ${style[theme]}`}>
             <h2 className="text">Logo</h2>
             <ul className={style.listItemNav}>
                 <li>
@@ -43,7 +43,7 @@ function NavBar() {
                 </Link> */}
                 <Avatar />
             </div>
-        </nav>
+        </div>
     );
 }
 

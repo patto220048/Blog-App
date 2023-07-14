@@ -1,8 +1,21 @@
 @import '../../color';
 @import '../../gobal';
 
-.home {
-    .wapper{
-        
+.containerHome {
+    .wapper {
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        height: 100vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+        &::-webkit-scrollbar{
+            display: none ;
+        }
     }
+}
+.light {
+    
+}
+.dark {
+    
 }
