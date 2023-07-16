@@ -39,9 +39,6 @@ function App() {
                 <footer>
                     <Footer />
                 </footer>
-                <div className={style.mess}>
-                    <Message/>
-                </div>
             </div>
             
         );
