@@ -4,6 +4,13 @@
 .main{
     display: flex;
     flex-direction: column;
+    position: relative;
+    .mess{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        position: fixed;
+    }
 }
 .dark{
     background-color: $mainColor;

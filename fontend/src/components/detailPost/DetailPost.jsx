@@ -169,12 +169,7 @@ function DetailPost() {
                             <Recommend />
                             <Recommend />
                             <Recommend />
-                            <Recommend />
-                            <Recommend />
-                            <Recommend />
-                            <Recommend />
-                            <Recommend />
-                            <Recommend />
+
                         </div>
                     </div>
                 </div>
