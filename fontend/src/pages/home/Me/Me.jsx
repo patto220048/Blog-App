@@ -1,26 +1,31 @@
 //library
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from './Me.module.scss';
-import Particles from "react-particles";
-import { init } from 'ityped'
+import Particles from 'react-particles';
+import { init } from 'ityped';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 //---------//
-import { loadSlim } from "tsparticles-slim";
+import { loadSlim } from 'tsparticles-slim';
 import { ThemeContext } from '../../../context/ThemeContext';
+import useLoop from '../../../hooks/useLoop';
 function Me() {
-    const {theme} = useContext(ThemeContext) 
+    const { theme } = useContext(ThemeContext);
+    // loop svg icon
+    const svgIcon = ['reactjs.svg', 'javascript.svg', 'css-3.svg', 'html.svg'];
+    const indexLoop = useLoop({ svgIcon }, 3000);
     // optison particles
-    const options = 
-    {
+    const options = {
         fpsLimit: 120,
         interactivity: {
             events: {
                 onClick: {
                     enable: true,
-                    mode: "push",
+                    mode: 'push',
                 },
                 onHover: {
                     enable: true,
-                    mode: "repulse",
+                    mode: 'repulse',
                 },
                 resize: true,
             },
@@ -39,17 +44,17 @@ function Me() {
                 value: '#ADB5BD',
             },
             links: {
-                color: "#ADB5BD",
+                color: '#ADB5BD',
                 distance: 150,
                 enable: true,
                 opacity: 0.4,
                 width: 1,
             },
             move: {
-                direction: "none",
+                direction: 'none',
                 enable: true,
                 outModes: {
-                    default: "bounce",
+                    default: 'bounce',
                 },
                 random: false,
                 speed: 1.1,
@@ -66,45 +71,55 @@ function Me() {
                 value: 0.3,
             },
             shape: {
-                type: "circle",
+                type: 'circle',
             },
             size: {
                 value: { min: 1, max: 5 },
             },
         },
         detectRetina: true,
-    }
+    };
     const particlesInit = useCallback(async (engine) => {
         await loadSlim(engine);
-    }, []);         
+    }, []);
     // itype
-    const textRef = useRef()
-    useEffect(()=>{
-        init(textRef.current, { 
+    const textRef = useRef();
+    useEffect(() => {
+        init(textRef.current, {
             showCursor: true,
-            strings: ['PATTO','WEB DEVELOPER'],
+            strings: ['PATTO', 'WEB DEVELOPER'],
             backDelay: 1500,
-            typeSpeed:  200,
-            cursorChar: "|",
+            typeSpeed: 200,
+            cursorChar: '|',
+        });
 
-        })
+    }, []);
 
-    },[])
+    
     return (
-    <div className={`${styled.containerMe} ${styled[theme]}`}>
-         <Particles className={styled.particles} options={options} init={particlesInit} />
-        <div className={styled.left}>
-            <h2>HI, I'M </h2>
-            <br />
-            <h2><span ref={textRef}></span></h2>
-            <p> Fresher Wed Devloper / Blogger</p>
-            
+        <div className={`${styled.containerMe} ${styled[theme]}`}>
+            <Particles className={styled.particles} options={options} init={particlesInit} />
+            <div className={styled.left}>
+                <h2>HI, I'M </h2>
+                <br />
+                <h2>
+                    <span ref={textRef}></span>
+                </h2>
+                <p> Fresher Wed Devloper / Blogger</p>
+                <Link to='/blog'>
+                <motion.button
+                    className={styled.box}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                >
+                    Contact with me
+                </motion.button>
+                </Link>
+            </div>
+            <div className={styled.right}>
+                <img src={import.meta.env.VITE_PUBLIC_FOLDER + svgIcon[indexLoop]} alt={svgIcon[indexLoop]} />
+            </div>
         </div>
-        <div className={styled.right}>
-           
-
-        </div>
-    </div>
     );
 }
 
