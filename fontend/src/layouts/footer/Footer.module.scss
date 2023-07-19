@@ -1,0 +1,132 @@
+@import '../../color';
+@import '../../gobal';
+.footer {
+    .wapper {
+        .footerItems {
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+
+            .supports {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin: 0;
+                span {
+                    cursor: default;
+
+                    color: $descColor;
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+                .support {
+                    display: flex;
+                    flex-direction: column;
+                    list-style: none;
+                    gap: 20px;
+                    padding-left: 10px;
+                    a {
+                        font-size: 15px;
+                        width: fit-content;
+                        text-decoration: none;
+                        color: rgba($color: $descColor, $alpha: 0.7);
+                        border-bottom: 1px solid transparent;
+                        &:hover {
+                            border-bottom: 1px solid $descColor;
+                        }
+                    }
+                }
+            }
+            .menus {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin: 0;
+                span {
+                    cursor: default;
+
+                    color: $descColor;
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+                .menu {
+                    display: flex;
+                    flex-direction: column;
+                    list-style: none;
+                    gap: 20px;
+                    padding-left: 10px;
+                    a {
+                        font-size: 15px;
+                        width: fit-content;
+                        text-decoration: none;
+                        color: rgba($color: $descColor, $alpha: 0.7);
+                        border-bottom: 1px solid transparent;
+                        &:hover {
+                            border-bottom: 1px solid $descColor;
+                        }
+                    }
+                }
+            }
+            .socials {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin: 0;
+                span {
+                    color: $descColor;
+                    font-size: 20px;
+                    font-weight: 600;
+                    cursor: default;
+                }
+
+                .social {
+                    display: flex;
+                    // flex-direction: column;
+                    list-style: none;
+                    gap: 30px;
+                    a {
+                        transition: all 0.5s ease;
+                        text-decoration: none;
+                        color: $descColor;
+                        &:hover {
+                            opacity: 0.8;
+                            transform: scale(1.2);
+                        }
+                    }
+                }
+            }
+        }
+        .copyRight {
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 30px;
+            padding-bottom: 10px;
+            gap: 5px;
+            color: $descColor;
+            a {
+                color: $descColor;
+                text-decoration: none;
+            }
+        }
+        .protectIcon {
+            text-align: center;
+        }
+    }
+}
+
+.light {
+    .wapper {
+        .copyRight {
+            border-top: 1px solid rgba($color: $dark-1000, $alpha: 0.1);
+        }
+    }
+}
+.dark {
+    .wapper {
+        .copyRight {
+            border-top: 1px solid rgba($color: $white, $alpha: 0.1);
+        }
+    }
+}

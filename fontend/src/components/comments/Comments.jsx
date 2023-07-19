@@ -47,12 +47,14 @@ function Comments() {
                 <button className='btn'>Comment</button>
                 </div>
                
+            </div>  
+            <div>
+                <Comment />
+                <Comment />
+                <Comment />
+                <Comment />
             </div>
-
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+         
         </div>
     );
 }

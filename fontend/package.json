@@ -12,14 +12,16 @@
   "dependencies": {
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.4.0",
+    "framer-motion": "^10.12.21",
     "html-react-parser": "^4.0.0",
-    "rt-dom": "^18.2.0",
-    "react-markdoeact": "^18.2.0",
-    "reacwn": "^8.0.7",
+    "ityped": "^1.0.3",
+    "react-markdown": "^8.0.7",
+    "react-particles": "^2.11.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.11.2",
     "sass": "^1.62.1",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "tsparticles-slim": "^2.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
