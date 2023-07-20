@@ -14,6 +14,7 @@ function Home() {
             <div className={styled.wapper}>
                     <Me/>
                     <Ani/>
+                   
             </div>
             
         </div>

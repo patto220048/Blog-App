@@ -38,10 +38,10 @@ function NavBar() {
                 </li>
             </ul>
             <div>
-                {/* <Link to= "/login">
+                <Link to= "/login">
                     <button className="btn">Login</button>
-                </Link> */}
-                <Avatar />
+                </Link>
+                {/* <Avatar /> */}
             </div>
         </div>
     );
