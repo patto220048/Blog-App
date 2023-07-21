@@ -11,14 +11,17 @@ import DetailPost from './components/detailPost/DetailPost';
 import Login from './register/login/Login';
 import SignUp from './register/signup/SignUp';
 import ResetPass from './register/resetPass/ResetPass';
+import Footer from './layouts/footer/Footer';
+import Contact from './components/contact/Contact';
+
 function App() {
     const { theme } = useContext(ThemeContext);
-
     //Protect router
     const currentUser = true;
 
     const ProtectRouter = ({ children }) => {
         if (!currentUser) {
+            console.log(children);
             return <h1>You are not authenticed</h1>;
         }
         return children;
@@ -27,10 +30,15 @@ function App() {
     const Layout = () => {
         return (
             <div className={`${style.main} ${style[theme]} `}>
-                <NavBar />
+                <nav>
+                    <NavBar />
+                </nav>
                 <main>
                     <Outlet />
                 </main>
+                <footer>
+                    <Footer />
+                </footer>
             </div>
         );
     };
@@ -40,21 +48,29 @@ function App() {
             path: '/',
             element: <Layout />,
             children: [
-                // {
-                //     path: '/',
-                //     element: <Home />,
-                // },
+                {
+                    path: '/',
+                    element: <Home />,
+                },
                 {
                     path: '/blog',
                     element: <BLog />,
                 },
                 {
                     path: '/blog/create',
-                    element:<ProtectRouter><CreatePost /></ProtectRouter> ,
+                    element: (
+                        <ProtectRouter>
+                            <CreatePost />
+                        </ProtectRouter>
+                    ),
                 },
                 {
                     path: '/blog/post/:id',
                     element: <DetailPost />,
+                },
+                {
+                    path: '/contact',
+                    element: <Contact />,
                 },
             ],
         },

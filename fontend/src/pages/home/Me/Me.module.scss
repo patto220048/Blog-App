@@ -1,0 +1,84 @@
+@import '../../../color';
+@import '../../../gobal';
+.containerMe {
+    height: calc(100vh);
+    scroll-snap-align: center;
+    display: flex;
+
+    .particles {
+        height: 100vh;
+    }
+    .left {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        margin-top: 12%;
+        margin-left: 5%;
+        h2 {
+            margin: 0;
+            font-size: 100px;
+            font-weight: 800;
+        }
+        span {
+            font-size: 80px;
+            font-weight: 800;
+        }
+        p {
+            color: rgba($color: $gray-700, $alpha: 0.7);
+            padding-top: 10px;
+        }
+        .box{
+            margin-top: 30px;
+            width: 30%;
+           
+            border: none;
+            outline: none;
+            padding: 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+           
+        }
+    }
+    .right {
+        flex: 1;
+        img {
+            transform: translate(50%,50%);  
+            width: 350px;
+            height: 350px;
+        }
+    }
+}
+.light {
+    .left {
+        color: $dark-1000;
+        span {
+            color: $pink-500;
+            text-shadow: 1px 0px 1px #cccccc, 0px 1px 1px #eeeeee, 2px 1px 1px #cccccc, 1px 2px 1px #eeeeee,
+                3px 2px 1px #cccccc, 2px 3px 1px #eeeeee, 4px 3px 1px #cccccc, 3px 4px 1px #eeeeee, 5px 4px 1px #cccccc,
+                4px 5px 1px #eeeeee, 6px 5px 1px #cccccc, 5px 6px 1px #eeeeee, 7px 6px 1px #cccccc;
+        }
+        .box{
+            background-color: $mainColor;
+            color: $white;
+        }
+    }
+}
+.dark {
+    .left {
+        color: $white;
+        span {
+            color: $pink-400;
+            text-shadow: 2px 2px 0px #ffffff, 5px 4px 0px rgba(0, 0, 0, 0.15);
+        }
+        p {
+            color: rgba($color: $gray-600, $alpha: 1);
+        }
+        .box{
+            background-color: $white;
+            color: $mainColor;
+        }
+    }
+}

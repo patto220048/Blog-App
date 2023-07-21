@@ -12,13 +12,16 @@
   "dependencies": {
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "framer-motion": "^10.12.21",
+    "html-react-parser": "^4.0.0",
+    "ityped": "^1.0.3",
     "react-markdown": "^8.0.7",
+    "react-particles": "^2.11.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.11.2",
     "sass": "^1.62.1",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "tsparticles-slim": "^2.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
@@ -28,6 +31,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "react-scroll": "^1.8.9",
     "vite": "^4.3.2"
   }
 }

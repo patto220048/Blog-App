@@ -28,7 +28,7 @@ function Comments() {
     ]
     return (
         <div className={styled.comments}>
-            <h1>Comments</h1>
+            <h2>Comments</h2>
 
             <div className={styled.inputComment}>
                 <div className={styled.currentUserComment}>
@@ -47,12 +47,14 @@ function Comments() {
                 <button className='btn'>Comment</button>
                 </div>
                
+            </div>  
+            <div>
+                <Comment />
+                <Comment />
+                <Comment />
+                <Comment />
             </div>
-
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+         
         </div>
     );
 }
