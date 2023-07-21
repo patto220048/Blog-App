@@ -31,14 +31,16 @@ function NavBar() {
                     <span>Project</span>
                 </li>
                 <li>
-                    <span>Contact</span>
+                    <NavLink to="/contact" style={{ textDecoration: 'none' }}>
+                        <span className={`${style[theme]}`}>Contact</span>
+                    </NavLink>
                 </li>
                 <li onClick={handleTheme}>
                     {(isDarkTheme && <span>{darkIcon}</span>) || (isLightTheme && <span>{lightIcon}</span>)}
                 </li>
             </ul>
             <div>
-                <Link to= "/login">
+                <Link to="/login">
                     <button className="btn">Login</button>
                 </Link>
                 {/* <Avatar /> */}

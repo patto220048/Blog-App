@@ -20,7 +20,7 @@ function Me() {
         interactivity: {
             events: {
                 onClick: {
-                    enable: false,
+                    enable: true,
                     mode: 'push',
                 },
                 onHover: {
@@ -106,7 +106,7 @@ function Me() {
                     <span ref={textRef}></span>
                 </h2>
                 <p> Fresher Wed Devloper / Blogger</p>
-                <Link to='/blog'>
+                <Link to='/contact'>
                 <motion.button
                     className={styled.box}
                     whileHover={{ scale: 1.1 }}

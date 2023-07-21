@@ -12,6 +12,7 @@ import Login from './register/login/Login';
 import SignUp from './register/signup/SignUp';
 import ResetPass from './register/resetPass/ResetPass';
 import Footer from './layouts/footer/Footer';
+import Contact from './components/contact/Contact';
 
 function App() {
     const { theme } = useContext(ThemeContext);
@@ -66,6 +67,10 @@ function App() {
                 {
                     path: '/blog/post/:id',
                     element: <DetailPost />,
+                },
+                {
+                    path: '/contact',
+                    element: <Contact />,
                 },
             ],
         },
