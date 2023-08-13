@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { loadSlim } from 'tsparticles-slim';
 import { ThemeContext } from '../../../context/ThemeContext';
 import useLoop from '../../../hooks/useLoop';
+
 function Me() {
     const { theme } = useContext(ThemeContext);
     // loop svg icon
@@ -82,6 +83,7 @@ function Me() {
     const particlesInit = useCallback(async (engine) => {
         await loadSlim(engine);
     }, []);
+    console.log(import.meta.env.VITE_PUBLIC_FOLDER)
     // itype
     const textRef = useRef();
     useEffect(() => {
